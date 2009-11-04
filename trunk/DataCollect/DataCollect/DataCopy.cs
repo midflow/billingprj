@@ -358,12 +358,26 @@ namespace DataCollect
             }
         }
         
-
         private void btnSelectFile_Click(object sender, EventArgs e)
         {
             ofdDidong.ShowDialog();
             filename = ofdDidong.SafeFileName;
             //SaoChepDiDong();
         }
+
+        private void btndelete_Click(object sender, EventArgs e)
+        {
+            //cnn = new SqlConnection(global::DataCollect.Properties.Settings.Default.TargetConn);
+            cmd = new SqlCommand();
+            cmd.CommandType = CommandType.StoredProcedure
+            cmd = new SqlCommand("DeleteData");
+            //if (cnn.State != ConnectionState.Open) 
+            cmd.Connection = TargetConn;
+            TargetConn.Open();
+            cmd.CommandTimeout = 0;
+            cmd.ExecuteNonQuery();
+        }
+
+       
     }
 }
