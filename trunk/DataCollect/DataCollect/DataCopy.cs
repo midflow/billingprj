@@ -29,16 +29,16 @@ namespace DataCollect
 
         private void btnCopy_Click(object sender, EventArgs e)
         {
-            if (dtpFrom.Value.Day == 0)
-            {                
-                SaoChepSTT();
-                SaoChepSTTDD();
-                SaoChepThueBao();
-                SaoChepThueBao_CN();
-            }
+            //if (dtpFrom.Value.Day == 0)
+            //{                
+            //    SaoChepSTT();
+            //    SaoChepSTTDD();
+            //    SaoChepThueBao();
+            //    SaoChepThueBao_CN();
+            //}
             SaoChepDiDong();
-            SaoChepCTHT();           
-            SaoChepCTCTHT();
+            //SaoChepCTHT();           
+            //SaoChepCTCTHT();
             
             MessageBox.Show("Hoàn thành");
         }
@@ -48,7 +48,7 @@ namespace DataCollect
             try
             {
                 //Connection string to a dbase file
-                string dbfConnectionString = string.Format("Dsn=tradidong;sourcedb=d:\\data;sourcetype=DBF;exclusive=No;backgroundfetch=Yes;collate=Machine;null=Yes;deleted=Yes");
+                string dbfConnectionString = string.Format("Dsn=tradidong;sourcedb=C:\\data;sourcetype=DBF;exclusive=No;backgroundfetch=Yes;collate=Machine;null=Yes;deleted=Yes");
 
                 //create connection to the DBF file
                 using (OdbcConnection connection = new OdbcConnection(dbfConnectionString))
@@ -69,10 +69,12 @@ namespace DataCollect
                         //cmd.ExecuteNonQuery();
 
                         //bulk copy of sql server
-                        DataTable dt = new DataTable();
-                        dt.Load(dr);
-                        using (SqlBulkCopy BulkCopy = new SqlBulkCopy(TargetConn.ConnectionString))
+                        //DataTable dt = new DataTable();
+                        //dt.Load(dr);
+                        using (SqlBulkCopy BulkCopy = new SqlBulkCopy(TargetConn.ConnectionString, SqlBulkCopyOptions.UseInternalTransaction))
                         {
+                            BulkCopy.BulkCopyTimeout = 0;
+                            BulkCopy.BatchSize = 5000;
                             BulkCopy.DestinationTableName = "tradd_092009";
                             BulkCopy.WriteToServer(dr);
                         }
@@ -361,21 +363,38 @@ namespace DataCollect
         private void btnSelectFile_Click(object sender, EventArgs e)
         {
             ofdDidong.ShowDialog();
-            filename = ofdDidong.SafeFileName;
+            filename = ofdDidong.SafeFileName.Split('.')[0];
             //SaoChepDiDong();
         }
 
         private void btndelete_Click(object sender, EventArgs e)
         {
+            pbRun.Visible = true;
+
             //cnn = new SqlConnection(global::DataCollect.Properties.Settings.Default.TargetConn);
-            cmd = new SqlCommand();
-            cmd.CommandType = CommandType.StoredProcedure
             cmd = new SqlCommand("DeleteData");
+         cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@ngaydauthang", SqlDbType.DateTime).Value = "01 " +  dtpFrom.Value.ToString("MMM yyyy");
+            if (dtpFrom.Value.ToString("dd MMM yyyy") == "01 " + dtpFrom.Value.ToString("MMM yyyy"))
+                cmd.Parameters.Add("@thangmoi", SqlDbType.Bit).Value = 1;
+            else
+                cmd.Parameters.Add("@thangmoi", SqlDbType.Bit).Value = 0;
+
+           
             //if (cnn.State != ConnectionState.Open) 
             cmd.Connection = TargetConn;
             TargetConn.Open();
             cmd.CommandTimeout = 0;
-            cmd.ExecuteNonQuery();
+            cmd.ExecuteNonQuery();            
+            pbRun.Visible = false;
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (pbRun.Value == pbRun.Maximum)
+                pbRun.Value = 0;
+
+            pbRun.Value += 1;
         }
 
        
