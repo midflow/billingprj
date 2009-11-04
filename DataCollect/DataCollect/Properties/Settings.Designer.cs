@@ -26,8 +26,8 @@ namespace DataCollect.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=10.72.50.12;Initial Catalog=DB_4;Persist Security Info=True;User ID=c" +
-            "ongno;Password=123456sql")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=10.72.50.11;Initial Catalog=DB_4;Persist Security Info=True;User ID=s" +
+            "a;Password=viva51f51238")]
         public string TargetConn {
             get {
                 return ((string)(this["TargetConn"]));

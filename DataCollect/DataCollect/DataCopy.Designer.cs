@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.btnCopy = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.dtpFrom = new System.Windows.Forms.DateTimePicker();
@@ -38,6 +39,8 @@
             this.btnSelectFile = new System.Windows.Forms.Button();
             this.btndelete = new System.Windows.Forms.Button();
             this.btnRun = new System.Windows.Forms.Button();
+            this.pbRun = new System.Windows.Forms.ProgressBar();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // btnCopy
@@ -126,11 +129,26 @@
             this.btnRun.Text = "Chạy tổng hợp";
             this.btnRun.UseVisualStyleBackColor = true;
             // 
+            // pbRun
+            // 
+            this.pbRun.Location = new System.Drawing.Point(66, 111);
+            this.pbRun.Maximum = 1000;
+            this.pbRun.Name = "pbRun";
+            this.pbRun.Size = new System.Drawing.Size(400, 23);
+            this.pbRun.TabIndex = 6;
+            this.pbRun.UseWaitCursor = true;
+            this.pbRun.Visible = false;
+            // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // DataCopy
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(511, 235);
+            this.Controls.Add(this.pbRun);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dtpTo);
@@ -160,5 +178,7 @@
         private System.Windows.Forms.Button btnSelectFile;
         private System.Windows.Forms.Button btndelete;
         private System.Windows.Forms.Button btnRun;
+        private System.Windows.Forms.ProgressBar pbRun;
+        private System.Windows.Forms.Timer timer1;
     }
 }
