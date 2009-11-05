@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -40,7 +40,7 @@ namespace DataCollect
             //SaoChepCTHT();           
             //SaoChepCTCTHT();
             
-            MessageBox.Show("Ho�n th�nh");
+            MessageBox.Show("Hoàn thành");
         }
 
         private void SaoChepDiDong()
@@ -369,24 +369,39 @@ namespace DataCollect
 
         private void btndelete_Click(object sender, EventArgs e)
         {
-            pbRun.Visible = true;
+            try
+            {
+                timer1.Start();
+                //timer1.Tick();
+                pbRun.Visible = true;
+                pbRun.Show();
+                //cnn = new SqlConnection(global::DataCollect.Properties.Settings.Default.TargetConn);
+                cmd = new SqlCommand("DeleteData");
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@ngaydauthang", SqlDbType.DateTime).Value = "01 " + dtpFrom.Value.ToString("MMM yyyy");
+                if (dtpFrom.Value.ToString("dd MMM yyyy") == "01 " + dtpFrom.Value.ToString("MMM yyyy"))
+                    cmd.Parameters.Add("@thangmoi", SqlDbType.Bit).Value = 1;
+                else
+                    cmd.Parameters.Add("@thangmoi", SqlDbType.Bit).Value = 0;
 
-            //cnn = new SqlConnection(global::DataCollect.Properties.Settings.Default.TargetConn);
-            cmd = new SqlCommand("DeleteData");
-         cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add("@ngaydauthang", SqlDbType.DateTime).Value = "01 " +  dtpFrom.Value.ToString("MMM yyyy");
-            if (dtpFrom.Value.ToString("dd MMM yyyy") == "01 " + dtpFrom.Value.ToString("MMM yyyy"))
-                cmd.Parameters.Add("@thangmoi", SqlDbType.Bit).Value = 1;
-            else
-                cmd.Parameters.Add("@thangmoi", SqlDbType.Bit).Value = 0;
 
-           
-            //if (cnn.State != ConnectionState.Open) 
-            cmd.Connection = TargetConn;
-            TargetConn.Open();
-            cmd.CommandTimeout = 0;
-            cmd.ExecuteNonQuery();            
-            pbRun.Visible = false;
+                //if (cnn.State != ConnectionState.Open) 
+                cmd.Connection = TargetConn;
+                TargetConn.Open();
+                cmd.CommandTimeout = 0;
+                cmd.ExecuteNonQuery();
+                //pbRun.Visible = false;
+            }
+            catch
+            {
+                MessageBox.Show("lỗi");
+            }
+            finally
+            {
+                TargetConn.Close();
+                pbRun.Visible = false;
+                timer1.Stop();
+            }
         }
 
         private void timer1_Tick(object sender, EventArgs e)
