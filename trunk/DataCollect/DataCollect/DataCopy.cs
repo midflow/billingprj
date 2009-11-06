@@ -374,7 +374,7 @@ namespace DataCollect
                 //timer1.Start();                
                 pbRun.Value = 0;
                 //timer1.Enabled=true;
-                //pbRun.Visible = true;
+                pbRun.Visible = true;
                 pbRun.Show();
                 //cnn = new SqlConnection(global::DataCollect.Properties.Settings.Default.TargetConn);
                 cmd = new SqlCommand("DeleteData");
@@ -400,7 +400,7 @@ namespace DataCollect
             finally
             {
                 TargetConn.Close();
-                //pbRun.Visible = false;
+                pbRun.Visible = false;
                 timer1.Enabled = false;
             }
         }
