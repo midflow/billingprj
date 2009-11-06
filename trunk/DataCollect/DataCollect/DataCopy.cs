@@ -371,9 +371,10 @@ namespace DataCollect
         {
             try
             {
-                timer1.Start();
-                //timer1.Tick();
-                pbRun.Visible = true;
+                //timer1.Start();                
+                pbRun.Value = 0;
+                //timer1.Enabled=true;
+                //pbRun.Visible = true;
                 pbRun.Show();
                 //cnn = new SqlConnection(global::DataCollect.Properties.Settings.Default.TargetConn);
                 cmd = new SqlCommand("DeleteData");
@@ -399,8 +400,8 @@ namespace DataCollect
             finally
             {
                 TargetConn.Close();
-                pbRun.Visible = false;
-                timer1.Stop();
+                //pbRun.Visible = false;
+                timer1.Enabled = false;
             }
         }
 
@@ -409,7 +410,7 @@ namespace DataCollect
             if (pbRun.Value == pbRun.Maximum)
                 pbRun.Value = 0;
 
-            pbRun.Value += 1;
+            pbRun.Value += 10;
         }
 
        
