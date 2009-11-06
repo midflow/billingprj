@@ -136,10 +136,10 @@
             this.pbRun.Name = "pbRun";
             this.pbRun.Size = new System.Drawing.Size(400, 23);
             this.pbRun.TabIndex = 6;
+            this.pbRun.Visible = false;
             // 
             // timer1
             // 
-            this.timer1.Enabled = true;
             this.timer1.Interval = 1;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
