@@ -45,6 +45,7 @@
             // 
             // btnCopy
             // 
+            this.btnCopy.Enabled = false;
             this.btnCopy.Location = new System.Drawing.Point(229, 145);
             this.btnCopy.Name = "btnCopy";
             this.btnCopy.Size = new System.Drawing.Size(75, 52);
@@ -132,7 +133,7 @@
             // pbRun
             // 
             this.pbRun.Location = new System.Drawing.Point(66, 111);
-            this.pbRun.Maximum = 1000;
+            this.pbRun.Maximum = 100000;
             this.pbRun.Name = "pbRun";
             this.pbRun.Size = new System.Drawing.Size(400, 23);
             this.pbRun.TabIndex = 6;
