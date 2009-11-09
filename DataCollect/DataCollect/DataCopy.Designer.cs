@@ -129,6 +129,7 @@
             this.btnRun.TabIndex = 3;
             this.btnRun.Text = "Chạy tổng hợp";
             this.btnRun.UseVisualStyleBackColor = true;
+            this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
             // 
             // pbRun
             // 

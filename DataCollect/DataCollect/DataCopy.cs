@@ -37,21 +37,58 @@ namespace DataCollect
                     SaoChepSTT();
                     SaoChepSTTDD();
                     SaoChepThueBao();
-                    SaoChepThueBao_CN();
+                    //SaoChepThueBao_CN();
                 }
-                //SaoChepDiDong();
+                SaoChepDiDong();
                 SaoChepCTHT();
                 SaoChepCTCTHT();
+                SaoChepDuLieuMoi();
                 this.Cursor = Cursors.Default;
-                MessageBox.Show("Hoàn thành");
+                MessageBox.Show("Hoàn thành việc sao chép dữ liệu!");
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("Có lỗi xảy ra!");
+                MessageBox.Show(ex.ToString());
+                MessageBox.Show("Lỗi phần sao chép dữ liệu");
+               
             }
             finally
             {
                 this.Cursor = Cursors.Default;
+            }
+        }
+
+        private void SaoChepDuLieuMoi()
+        {
+            if (TargetConn.State == ConnectionState.Closed)
+                TargetConn.Open();
+            SqlTransaction tran = TargetConn.BeginTransaction();
+            try
+            {
+                cmd = new SqlCommand("CopyData", TargetConn, tran);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@thangnam", SqlDbType.NVarChar, 6).Value = dtpFrom.Value.ToString("MMyyyy");
+                cmd.Parameters.Add("@ngaydauthang", SqlDbType.DateTime).Value = "01 " + dtpFrom.Value.ToString("MMM yyyy");
+                if (dtpFrom.Value.ToString("dd MMM yyyy") == "01 " + dtpFrom.Value.ToString("MMM yyyy"))
+                    cmd.Parameters.Add("@thangmoi", SqlDbType.Bit).Value = 1;
+                else
+                    cmd.Parameters.Add("@thangmoi", SqlDbType.Bit).Value = 0;
+
+                //cmd.Connection = TargetConn;
+                //TargetConn.Open();
+                cmd.CommandTimeout = 0;
+                cmd.ExecuteNonQuery();
+                tran.Commit();
+            }
+            catch (SqlException ex)
+            {
+                tran.Rollback();
+                MessageBox.Show(ex.ToString());
+                throw ex;
+            }
+            finally
+            {
+                TargetConn.Close();
             }
         }
 
@@ -84,8 +121,9 @@ namespace DataCollect
                         }
                         trans.Commit();
                     }
-                    catch
+                    catch(Exception ex)
                     {
+                        MessageBox.Show(ex.ToString());
                         MessageBox.Show("Lỗi phần sao chép dữ liệu di động");
                         trans.Rollback();
                     }
@@ -162,6 +200,9 @@ namespace DataCollect
 
         private void SaoChepCTCTHT()
         {
+            if (TargetConn.State == ConnectionState.Closed)
+                TargetConn.Open();
+            SqlTransaction trans = TargetConn.BeginTransaction();
             try
             {
                 // Getting source data
@@ -171,7 +212,7 @@ namespace DataCollect
                 SqlDataReader rdr = cmd.ExecuteReader();
 
                 // Initializing an SqlBulkCopy object
-                SqlBulkCopy sbc = new SqlBulkCopy(TargetConn.ConnectionString, SqlBulkCopyOptions.UseInternalTransaction);
+                SqlBulkCopy sbc = new SqlBulkCopy(TargetConn, SqlBulkCopyOptions.KeepIdentity, trans);
                 sbc.BulkCopyTimeout = 6000;
                 sbc.BatchSize = 50000;
 
@@ -182,21 +223,27 @@ namespace DataCollect
                 sbc.WriteToServer(rdr);
                 sbc.Close();
                 rdr.Close();
+                trans.Commit();
             }
             catch
             {
+                trans.Rollback();
                 MessageBox.Show("Lỗi ở phần sao chép dữ liệu bảng tblctctht");
             }
             finally
             {
                 // Closing connection and the others
-
+                trans.Dispose();
+                TargetConn.Close();
                 SourceConn.Close();
             }
         }
 
         private void SaoChepCTHT()
         {
+            if (TargetConn.State==ConnectionState.Closed)
+            TargetConn.Open();
+            SqlTransaction trans = TargetConn.BeginTransaction();
             try
             {
                 // Getting source data
@@ -206,7 +253,8 @@ namespace DataCollect
                 SqlDataReader rdr = cmd.ExecuteReader();
 
                 // Initializing an SqlBulkCopy object
-                SqlBulkCopy sbc = new SqlBulkCopy(TargetConn.ConnectionString, SqlBulkCopyOptions.UseInternalTransaction);
+
+                SqlBulkCopy sbc = new SqlBulkCopy(TargetConn, SqlBulkCopyOptions.KeepIdentity, trans);
                 sbc.BulkCopyTimeout = 6000;
                 sbc.BatchSize = 50000;
 
@@ -217,35 +265,39 @@ namespace DataCollect
                 sbc.WriteToServer(rdr);
                 sbc.Close();
                 rdr.Close();
+                trans.Commit();
             }
             catch
             {
                 MessageBox.Show("Lỗi ở phần sao chép dữ liệu bảng tblctht");
+                trans.Rollback();
             }
             finally
             {
                 // Closing connection and the others
-
+                trans.Dispose();
+                TargetConn.Close();
                 SourceConn.Close();
             }
         }
 
         private void SaoChepThueBao()
         {
+            if (TargetConn.State == ConnectionState.Closed)
             TargetConn.Open();
-            SqlTransaction transaction = TargetConn.BeginTransaction();
+            //SqlTransaction transaction = TargetConn.BeginTransaction();
             try
             {
-                cmd = new SqlCommand("select * from tblThueBao where thangnam='" + dtpTo.Value.ToString("MMyyyy") + "'", SourceConn);
+                cmd = new SqlCommand("select * from tblThueBao where thangnam='" + dtpTo.Value.AddMonths(-1).ToString("MMyyyy") + "'", SourceConn);
                 cmd.CommandTimeout = 0;
-                cmd.Transaction = transaction;
+                //cmd.Transaction = transaction;
                 if (SourceConn.State == ConnectionState.Closed)
                     SourceConn.Open();
                 SqlDataReader rdr = cmd.ExecuteReader();
 
                 // Initializing an SqlBulkCopy object
 
-                SqlBulkCopy sbc = new SqlBulkCopy(TargetConn, SqlBulkCopyOptions.KeepIdentity, transaction);
+                SqlBulkCopy sbc = new SqlBulkCopy(TargetConn.ConnectionString, SqlBulkCopyOptions.KeepIdentity);
 
                 sbc.BulkCopyTimeout = 6000;
                 sbc.BatchSize = 50000;
@@ -254,20 +306,22 @@ namespace DataCollect
                 sbc.DestinationTableName = "dbo.tblThueBao";
                 //DataTable dt = new DataTable();
                 //dt.Load(rdr);
-                transaction.Commit();
+                
                 sbc.WriteToServer(rdr);
                 sbc.Close();
                 rdr.Close();
+                //transaction.Commit();
             }
-            catch
+            catch(SqlException ex)
             {
                 MessageBox.Show("Lỗi ở phần sao chép tblthuebao");
-                transaction.Rollback();
+                //transaction.Rollback();
+                throw ex;
             }
             finally
             {
                 // Closing connection and the others
-                transaction.Dispose();
+                //transaction.Dispose();
                 SourceConn.Close();
             }
         }
@@ -277,7 +331,7 @@ namespace DataCollect
             try
             {
                 // Getting source data
-                cmd = new SqlCommand("select * from tblstt where thangnam='" + dtpTo.Value.ToString("MMyyyy") + "'", SourceConn);
+                cmd = new SqlCommand("select * from tblstt where thangnam='" + dtpTo.Value.AddMonths(-1).ToString("MMyyyy") + "'", SourceConn);
                 cmd.CommandTimeout = 0;
                 if (SourceConn.State == ConnectionState.Closed)
                     SourceConn.Open();
@@ -297,9 +351,10 @@ namespace DataCollect
                 sbc.Close();
                 rdr.Close();
             }
-            catch
+            catch(Exception ex)
             {
                 MessageBox.Show("Lỗi ở phần sao chép tblstt");
+                throw ex;
             }
             finally
             {
@@ -314,7 +369,7 @@ namespace DataCollect
             try
             {
                 // Getting source data
-                cmd = new SqlCommand("select * from tblsttdidong where thangnam='" + dtpTo.Value.ToString("MMyyyy") + "'", SourceConn);
+                cmd = new SqlCommand("select * from tblsttdidong where thangnam='" + dtpTo.Value.AddMonths(-1).ToString("MMyyyy") + "'", SourceConn);
                 cmd.CommandTimeout = 0;
                 if (SourceConn.State == ConnectionState.Closed)
                     SourceConn.Open();
@@ -333,9 +388,10 @@ namespace DataCollect
                 sbc.Close();
                 rdr.Close();
             }
-            catch
+            catch(Exception ex)
             {
                 MessageBox.Show("Lỗi ở phần sao chép tblsttdidong");
+                throw ex;
             }
             finally
             {
@@ -345,43 +401,43 @@ namespace DataCollect
             }
         }
 
-        private void SaoChepThueBao_CN()
-        {
-            SqlConnection cnn = new SqlConnection(global::DataCollect.Properties.Settings.Default.SourceConn);
+        //private void SaoChepThueBao_CN()
+        //{
+        //    //SqlConnection cnn = new SqlConnection(global::DataCollect.Properties.Settings.Default.SourceConn);
 
 
-            // Getting source data
-            SqlCommand cmd = new SqlCommand("select distinct id, tenthuebao, diachi, '', '', '', khid, line from tblstt where thangnam='" + dtpTo.Value.ToString("MMyyyy") + "'", cnn);
-            cmd.CommandTimeout = 0;
-            cnn.Open();
-            SqlDataReader rdr = cmd.ExecuteReader();
+        //    // Getting source data
+        //    SqlCommand cmd = new SqlCommand("select distinct id, tenthuebao, diachi, '', '', '', khid, line from tblstt where thangnam='" + dtpTo.Value.ToString("MMyyyy") + "'", cnn);
+        //    cmd.CommandTimeout = 0;
+        //    cnn.Open();
+        //    SqlDataReader rdr = cmd.ExecuteReader();
 
 
-            cnn = new SqlConnection(global::DataCollect.Properties.Settings.Default.TargetConn);
-            //cmd.CommandType = CommandType.StoredProcedure
-            cmd = new SqlCommand("Delete from tblThuebao_cn");
-            //if (cnn.State != ConnectionState.Open) 
-            cmd.Connection = cnn;
-            cnn.Open();
-            cmd.CommandTimeout = 0;
-            cmd.ExecuteNonQuery();
+        //    cnn = new SqlConnection(global::DataCollect.Properties.Settings.Default.TargetConn);
+        //    //cmd.CommandType = CommandType.StoredProcedure
+        //    cmd = new SqlCommand("Delete from tblThuebao_cn");
+        //    //if (cnn.State != ConnectionState.Open) 
+        //    cmd.Connection = cnn;
+        //    cnn.Open();
+        //    cmd.CommandTimeout = 0;
+        //    cmd.ExecuteNonQuery();
 
-            // Initializing an SqlBulkCopy object
-            SqlBulkCopy sbc = new SqlBulkCopy(global::DataCollect.Properties.Settings.Default.TargetConn);
-            sbc.BulkCopyTimeout = 6000;
-            sbc.BatchSize = 50000;
+        //    // Initializing an SqlBulkCopy object
+        //    SqlBulkCopy sbc = new SqlBulkCopy(global::DataCollect.Properties.Settings.Default.TargetConn);
+        //    sbc.BulkCopyTimeout = 6000;
+        //    sbc.BatchSize = 50000;
 
-            // Copying data to destination
-            sbc.DestinationTableName = "dbo.tblThueBao_cn";
-            //DataTable dt = new DataTable();
-            //dt.Load(rdr);
-            sbc.WriteToServer(rdr);
+        //    // Copying data to destination
+        //    sbc.DestinationTableName = "dbo.tblThueBao_cn";
+        //    //DataTable dt = new DataTable();
+        //    //dt.Load(rdr);
+        //    sbc.WriteToServer(rdr);
 
-            // Closing connection and the others
-            sbc.Close();
-            rdr.Close();
-            cnn.Close();
-        }
+        //    // Closing connection and the others
+        //    sbc.Close();
+        //    rdr.Close();
+        //    cnn.Close();
+        //}
 
         private void DataCopy_Load(object sender, EventArgs e)
         {
@@ -390,6 +446,8 @@ namespace DataCollect
 
         private void XoaDuLieu()
         {
+            if (TargetConn.State == ConnectionState.Closed)
+                TargetConn.Open();
             SqlTransaction tran = TargetConn.BeginTransaction();
             try
             {
@@ -463,6 +521,37 @@ namespace DataCollect
                 pbRun.Value = 0;
 
             pbRun.Value += 10;
+        }
+
+        private void btnRun_Click(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.WaitCursor;
+            if (TargetConn.State == ConnectionState.Closed)
+                TargetConn.Open();
+            SqlTransaction tran = TargetConn.BeginTransaction();
+            try
+            {
+                cmd = new SqlCommand("Tonghopbaocao", TargetConn, tran);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@tungay", SqlDbType.NVarChar).Value = dtpFrom.Value.ToString("dd MMM yyyy");
+                cmd.Parameters.Add("@denngay", SqlDbType.NVarChar).Value = dtpTo.Value.ToString("dd MMM yyyy");
+                
+                cmd.CommandTimeout = 0;
+                cmd.ExecuteNonQuery();
+                tran.Commit();
+                MessageBox.Show("Tổng hợp xong báo cáo");
+            }
+            catch (SqlException ex)
+            {
+                tran.Rollback();
+                MessageBox.Show(ex.ToString());
+                throw ex;
+            }
+            finally
+            {
+                TargetConn.Close();
+                this.Cursor = Cursors.Default;
+            }            
         }
 
     }
