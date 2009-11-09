@@ -488,6 +488,7 @@ namespace DataCollect
                 //cnn = new SqlConnection(global::DataCollect.Properties.Settings.Default.TargetConn);
                 cmd = new SqlCommand("DeleteData");
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@thangnam", SqlDbType.NVarChar).Value = dtpFrom.Value.AddMonths(-1).ToString("MMyyyy");
                 cmd.Parameters.Add("@ngaydauthang", SqlDbType.DateTime).Value = "01 " + dtpFrom.Value.ToString("MMM yyyy");
                 if (dtpFrom.Value.ToString("dd MMM yyyy") == "01 " + dtpFrom.Value.ToString("MMM yyyy"))
                     cmd.Parameters.Add("@thangmoi", SqlDbType.Bit).Value = 1;
@@ -499,16 +500,17 @@ namespace DataCollect
                 cmd.Connection = TargetConn;
                 TargetConn.Open();
                 cmd.CommandTimeout = 0;
-                cmd.ExecuteNonQuery();
-                this.Cursor = Cursors.Default;
+                cmd.ExecuteNonQuery();                
                 MessageBox.Show("Xoá dữ liệu hoàn thành!");
             }
-            catch
+            catch(Exception ex)
             {
+                MessageBox.Show(ex.ToString());
                 MessageBox.Show("lỗi khi xoá dữ liệu");
             }
             finally
             {
+                this.Cursor = Cursors.Default;
                 TargetConn.Close();                
                 //pbRun.Visible = false;
                 //timer1.Enabled = false;
