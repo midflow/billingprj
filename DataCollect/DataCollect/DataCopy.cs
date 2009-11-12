@@ -67,7 +67,7 @@ namespace DataCollect
             {
                 cmd = new SqlCommand("CopyData", TargetConn, tran);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("@thangnam", SqlDbType.NVarChar, 6).Value = dtpFrom.Value.ToString("MMyyyy");
+                cmd.Parameters.Add("@thangnam", SqlDbType.NVarChar, 6).Value = dtpFrom.Value.AddMonths(-1).ToString("MMyyyy");
                 cmd.Parameters.Add("@ngaydauthang", SqlDbType.DateTime).Value = "01 " + dtpFrom.Value.ToString("MMM yyyy");
                 if (dtpFrom.Value.ToString("dd MMM yyyy") == "01 " + dtpFrom.Value.ToString("MMM yyyy"))
                     cmd.Parameters.Add("@thangmoi", SqlDbType.Bit).Value = 1;
@@ -456,7 +456,7 @@ namespace DataCollect
                 cmd.Connection = TargetConn;
                 TargetConn.Open();
                 cmd.CommandTimeout = 0;
-                cmd.ExecuteNonQuery();
+                //cmd.ExecuteNonQuery();
                 tran.Commit();
             }
             catch (Exception ex)
@@ -498,6 +498,7 @@ namespace DataCollect
 
                 //if (cnn.State != ConnectionState.Open) 
                 cmd.Connection = TargetConn;
+                if (TargetConn.State == ConnectionState.Closed)
                 TargetConn.Open();
                 cmd.CommandTimeout = 0;
                 cmd.ExecuteNonQuery();                
