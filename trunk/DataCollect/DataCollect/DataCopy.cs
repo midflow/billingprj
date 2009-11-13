@@ -475,6 +475,8 @@ namespace DataCollect
             ofdDidong.ShowDialog();
             filename = ofdDidong.SafeFileName.Split('.')[0];
             btnCopy.Enabled = true;
+            if (!ODBCManager.DSNExists("tradidong"))
+                ODBCManager.CreateDSN("tradidong", "tra di dong", "C:\\data", "Microsoft FoxPro VFP Driver (*.DBF)", 1, ofdDidong.FileName);
             //SaoChepDiDong();
         }
 
@@ -501,7 +503,12 @@ namespace DataCollect
                 if (TargetConn.State == ConnectionState.Closed)
                 TargetConn.Open();
                 cmd.CommandTimeout = 0;
+<<<<<<< .mine
+                cmd.ExecuteNonQuery();
+                
+=======
                 cmd.ExecuteNonQuery();                
+>>>>>>> .r12
                 MessageBox.Show("Xoá dữ liệu hoàn thành!");
             }
             catch(Exception ex)
@@ -511,8 +518,13 @@ namespace DataCollect
             }
             finally
             {
+<<<<<<< .mine
+                TargetConn.Close();   
+                this.Cursor = Cursors.Default;             
+=======
                 this.Cursor = Cursors.Default;
                 TargetConn.Close();                
+>>>>>>> .r12
                 //pbRun.Visible = false;
                 //timer1.Enabled = false;
             }
@@ -555,6 +567,11 @@ namespace DataCollect
                 TargetConn.Close();
                 this.Cursor = Cursors.Default;
             }            
+        }
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+
         }
 
     }
