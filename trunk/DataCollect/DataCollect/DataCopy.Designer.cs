@@ -42,6 +42,7 @@
             this.pbRun = new System.Windows.Forms.ProgressBar();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnCopy
@@ -67,7 +68,7 @@
             // 
             // dtpFrom
             // 
-            this.dtpFrom.Location = new System.Drawing.Point(163, 46);
+            this.dtpFrom.Location = new System.Drawing.Point(163, 12);
             this.dtpFrom.Name = "dtpFrom";
             this.dtpFrom.Size = new System.Drawing.Size(222, 20);
             this.dtpFrom.TabIndex = 4;
@@ -75,7 +76,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(97, 49);
+            this.label1.Location = new System.Drawing.Point(97, 15);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(46, 13);
             this.label1.TabIndex = 5;
@@ -83,7 +84,7 @@
             // 
             // dtpTo
             // 
-            this.dtpTo.Location = new System.Drawing.Point(163, 87);
+            this.dtpTo.Location = new System.Drawing.Point(163, 53);
             this.dtpTo.Name = "dtpTo";
             this.dtpTo.Size = new System.Drawing.Size(222, 20);
             this.dtpTo.TabIndex = 4;
@@ -91,7 +92,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(97, 90);
+            this.label2.Location = new System.Drawing.Point(97, 56);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 13);
             this.label2.TabIndex = 5;
@@ -135,9 +136,11 @@
             // pbRun
             // 
             this.pbRun.Location = new System.Drawing.Point(66, 111);
-            this.pbRun.Maximum = 100000;
+            this.pbRun.MarqueeAnimationSpeed = 1000;
             this.pbRun.Name = "pbRun";
             this.pbRun.Size = new System.Drawing.Size(400, 23);
+            this.pbRun.Step = 1;
+            this.pbRun.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             this.pbRun.TabIndex = 6;
             this.pbRun.Visible = false;
             // 
@@ -148,7 +151,21 @@
             // 
             // backgroundWorker1
             // 
+            this.backgroundWorker1.WorkerReportsProgress = true;
             this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
+            this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.label3.Location = new System.Drawing.Point(177, 88);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(183, 20);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "Đang chạy xin hãy chờ ...";
+            this.label3.Visible = false;
             // 
             // DataCopy
             // 
@@ -156,6 +173,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(511, 235);
             this.Controls.Add(this.pbRun);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dtpTo);
@@ -188,5 +206,6 @@
         private System.Windows.Forms.ProgressBar pbRun;
         private System.Windows.Forms.Timer timer1;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.Label label3;
     }
 }

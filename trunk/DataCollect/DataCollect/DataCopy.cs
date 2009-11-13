@@ -16,6 +16,7 @@ namespace DataCollect
         SqlConnection SourceConn = new SqlConnection(global::DataCollect.Properties.Settings.Default.SourceConn);
         string filename;
         SqlCommand cmd;
+        int process=0;
 
         public DataCopy()
         {
@@ -446,27 +447,42 @@ namespace DataCollect
 
         private void XoaDuLieu()
         {
-            if (TargetConn.State == ConnectionState.Closed)
-                TargetConn.Open();
-            SqlTransaction tran = TargetConn.BeginTransaction();
             try
             {
-                cmd = new SqlCommand("DeleteData");
-                cmd.Parameters.Add("@thangnam", SqlDbType.NVarChar, 6).Value = dtpFrom.Value.ToString("MMyyyy");
-                cmd.Connection = TargetConn;
-                TargetConn.Open();
-                cmd.CommandTimeout = 0;
+                System.Threading.Thread.Sleep(10000);
+                //timer1.Start();                
+                //this.Cursor = Cursors.WaitCursor;
+                //cnn = new SqlConnection(global::DataCollect.Properties.Settings.Default.TargetConn);
+                //cmd = new SqlCommand("DeleteData");
+                //cmd.CommandType = CommandType.StoredProcedure;
+                //cmd.Parameters.Add("@thangnam", SqlDbType.NVarChar).Value = dtpFrom.Value.AddMonths(-1).ToString("MMyyyy");
+                //cmd.Parameters.Add("@ngaydauthang", SqlDbType.DateTime).Value = "01 " + dtpFrom.Value.ToString("MMM yyyy");
+                //if (dtpFrom.Value.ToString("dd MMM yyyy") == "01 " + dtpFrom.Value.ToString("MMM yyyy"))
+                //    cmd.Parameters.Add("@thangmoi", SqlDbType.Bit).Value = 1;
+                //else
+                //    cmd.Parameters.Add("@thangmoi", SqlDbType.Bit).Value = 0;
+
+
+                ////if (cnn.State != ConnectionState.Open) 
+                //cmd.Connection = TargetConn;
+                //if (TargetConn.State == ConnectionState.Closed)
+                //    TargetConn.Open();
+                //cmd.CommandTimeout = 0;
                 //cmd.ExecuteNonQuery();
-                tran.Commit();
+                //MessageBox.Show("Xoá dữ liệu hoàn thành!");
             }
             catch (Exception ex)
             {
-                tran.Rollback();
                 MessageBox.Show(ex.ToString());
+                MessageBox.Show("lỗi khi xoá dữ liệu");
             }
             finally
             {
+
+                
                 TargetConn.Close();
+                //pbRun.Visible = false;
+                //timer1.Enabled = false;
             }
         }
 
@@ -482,51 +498,23 @@ namespace DataCollect
 
         private void btndelete_Click(object sender, EventArgs e)
         {
-
-            try
-            {
-                //timer1.Start();                
-                this.Cursor = Cursors.WaitCursor;
-                //cnn = new SqlConnection(global::DataCollect.Properties.Settings.Default.TargetConn);
-                cmd = new SqlCommand("DeleteData");
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("@thangnam", SqlDbType.NVarChar).Value = dtpFrom.Value.AddMonths(-1).ToString("MMyyyy");
-                cmd.Parameters.Add("@ngaydauthang", SqlDbType.DateTime).Value = "01 " + dtpFrom.Value.ToString("MMM yyyy");
-                if (dtpFrom.Value.ToString("dd MMM yyyy") == "01 " + dtpFrom.Value.ToString("MMM yyyy"))
-                    cmd.Parameters.Add("@thangmoi", SqlDbType.Bit).Value = 1;
-                else
-                    cmd.Parameters.Add("@thangmoi", SqlDbType.Bit).Value = 0;
-
-
-                //if (cnn.State != ConnectionState.Open) 
-                cmd.Connection = TargetConn;
-                if (TargetConn.State == ConnectionState.Closed)
-                TargetConn.Open();
-                cmd.CommandTimeout = 0;
-                cmd.ExecuteNonQuery();     
-                MessageBox.Show("Xoá dữ liệu hoàn thành!");
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-                MessageBox.Show("lỗi khi xoá dữ liệu");
-            }
-            finally
-            {
-
-                this.Cursor = Cursors.Default;
-                TargetConn.Close();                
-                //pbRun.Visible = false;
-                //timer1.Enabled = false;
-            }
+            process=1;
+            label3.Visible = true;
+            this.Cursor = Cursors.WaitCursor;       
+            timer1.Enabled = true;
+            timer1.Start();
+            pbRun.Visible = true;
+            setbuttonStatus(false);
+            backgroundWorker1.RunWorkerAsync();            
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if (pbRun.Value == pbRun.Maximum)
+            if (pbRun.Value == 100)
                 pbRun.Value = 0;
-
-            pbRun.Value += 10;
+            pbRun.Value += 1;        
+           
+            backgroundWorker1.ReportProgress(pbRun.Value);  
         }
 
         private void btnRun_Click(object sender, EventArgs e)
@@ -561,9 +549,41 @@ namespace DataCollect
         }
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
-        {
-
+        {            
+            //System.ComponentModel.BackgroundWorker worker = (System.ComponentModel.BackgroundWorker)sender;           
+            switch (process)
+            {
+                case 1:
+                    XoaDuLieu();
+                    break;
+                case 2:
+                    break;
+            }                        
         }
 
+        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            pbRun.Value = e.ProgressPercentage;
+        }
+
+        private void setbuttonStatus(bool stt)
+        {
+            btndelete.Enabled = stt;
+            btnSelectFile.Enabled = stt;
+            btnCopy.Enabled = stt;
+            btnRun.Enabled = stt;
+            btnClose.Enabled = stt;
+            dtpFrom.Enabled = stt;
+            dtpTo.Enabled = stt;
+        }
+
+        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            timer1.Stop();
+            pbRun.Visible = false;
+            this.Cursor = Cursors.Default;
+            label3.Visible = false;
+            setbuttonStatus(true);
+        }
     }
 }
