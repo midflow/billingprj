@@ -66,7 +66,7 @@ namespace DataCollect
                 label3.Text = "Đang sao chép dữ liệu mới";
                 SaoChepDuLieuMoi();
                 //this.Cursor = Cursors.Default;
-                label3.Text="Hoàn thành việc sao chép dữ liệu! Đang tổng hợp báo cáo ..";
+                label3.Text="Hoàn thành sao chép dữ liệu! Đang tổng hợp báo cáo ...";
             }
             catch (Exception ex)
             {
