@@ -43,6 +43,7 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.label3 = new System.Windows.Forms.Label();
+            this.chkRunAll = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // btnCopy
@@ -105,7 +106,7 @@
             // 
             // btnSelectFile
             // 
-            this.btnSelectFile.Location = new System.Drawing.Point(148, 145);
+            this.btnSelectFile.Location = new System.Drawing.Point(66, 146);
             this.btnSelectFile.Name = "btnSelectFile";
             this.btnSelectFile.Size = new System.Drawing.Size(75, 52);
             this.btnSelectFile.TabIndex = 3;
@@ -115,7 +116,7 @@
             // 
             // btndelete
             // 
-            this.btndelete.Location = new System.Drawing.Point(66, 145);
+            this.btndelete.Location = new System.Drawing.Point(148, 145);
             this.btndelete.Name = "btndelete";
             this.btndelete.Size = new System.Drawing.Size(75, 52);
             this.btndelete.TabIndex = 3;
@@ -167,11 +168,24 @@
             this.label3.Text = "Đang chạy xin hãy chờ ...";
             this.label3.Visible = false;
             // 
+            // chkRunAll
+            // 
+            this.chkRunAll.AutoSize = true;
+            this.chkRunAll.Checked = true;
+            this.chkRunAll.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkRunAll.Location = new System.Drawing.Point(66, 204);
+            this.chkRunAll.Name = "chkRunAll";
+            this.chkRunAll.Size = new System.Drawing.Size(89, 17);
+            this.chkRunAll.TabIndex = 7;
+            this.chkRunAll.Text = "Chạy toàn bộ";
+            this.chkRunAll.UseVisualStyleBackColor = true;
+            // 
             // DataCopy
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(511, 235);
+            this.Controls.Add(this.chkRunAll);
             this.Controls.Add(this.pbRun);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -207,5 +221,6 @@
         private System.Windows.Forms.Timer timer1;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.CheckBox chkRunAll;
     }
 }
