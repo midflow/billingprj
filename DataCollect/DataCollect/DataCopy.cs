@@ -72,7 +72,6 @@ namespace DataCollect
             {
                 MessageBox.Show(ex.ToString());
                 MessageBox.Show("Lỗi phần sao chép dữ liệu");
-
             }            
         }
         
@@ -106,6 +105,7 @@ namespace DataCollect
             }
             finally
             {
+                tran.Dispose();
                 TargetConn.Close();
             }
         }
@@ -581,6 +581,7 @@ namespace DataCollect
             finally
             {
                 TargetConn.Close();
+                label3.Text = "Kết thúc với thời gian " + (Ketthuc - Batdau);
                 //this.Cursor = Cursors.Default;
             } 
         }
@@ -611,8 +612,7 @@ namespace DataCollect
             XoaDuLieu();
             SaoChepDuLieu();
             ChayTongHop();
-            Ketthuc = DateTime.Now;
-            label3.Text = "Kết thúc với thời gian " + (Ketthuc - Batdau);
+            Ketthuc = DateTime.Now;           
         }
 
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
