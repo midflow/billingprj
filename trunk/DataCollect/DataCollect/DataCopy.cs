@@ -502,22 +502,31 @@ namespace DataCollect
 
         private void btnSelectFile_Click(object sender, EventArgs e)
         {
-            ofdDidong.ShowDialog();
-            filename = ofdDidong.SafeFileName.Split('.')[0];
-            btnCopy.Enabled = true;
-            if (!ODBCManager.DSNExists("tradidong"))
-                ODBCManager.CreateDSN("tradidong", "tra di dong", "C:\\data", "Microsoft FoxPro VFP Driver (*.DBF)", true, ofdDidong.FileName);
-            //SaoChepDiDong();
-            if (chkRunAll.Checked)
+            if (ofdDidong.ShowDialog() == DialogResult.OK)
             {
-                process = 4;
-                label3.Visible = true;
-                this.Cursor = Cursors.WaitCursor;
-                timer1.Enabled = true;
-                timer1.Start();
-                pbRun.Visible = true;
-                setbuttonStatus(false);
-                backgroundWorker1.RunWorkerAsync(); 
+                string temstr = ofdDidong.FileName;
+                string extent = temstr.Substring(temstr.LastIndexOf('.'),4);
+                string[] temarr = temstr.Split('\\');
+                filename = temarr[temarr.Length-1].Replace(extent,"");
+
+                string strDir = ofdDidong.FileName.Replace("\\" + filename + extent, "");
+                //filename = filename;
+                btnCopy.Enabled = true;
+                if (ODBCManager.DSNExists("tradidong"))
+                    ODBCManager.RemoveDSN("tradidong");
+                ODBCManager.CreateDSN("tradidong", "tra di dong", strDir, "Microsoft FoxPro VFP Driver (*.DBF)", true, ofdDidong.FileName);
+                //SaoChepDiDong();
+                if (chkRunAll.Checked)
+                {
+                    process = 4;
+                    label3.Visible = true;
+                    this.Cursor = Cursors.WaitCursor;
+                    timer1.Enabled = true;
+                    timer1.Start();
+                    pbRun.Visible = true;
+                    setbuttonStatus(false);
+                    backgroundWorker1.RunWorkerAsync();
+                }
             }
         }
 
