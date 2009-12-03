@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataCollect", "DataCollect\DataCollect.csproj", "{D6E91EA3-1A0A-4691-99A3-2AB7BF6F8306}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "DataCollectSetup", "DataCollectSetup\DataCollectSetup.vdproj", "{3EC9EFBE-130E-4F5A-BD3E-21521747479F}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -17,6 +19,8 @@ Global
 		{D6E91EA3-1A0A-4691-99A3-2AB7BF6F8306}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6E91EA3-1A0A-4691-99A3-2AB7BF6F8306}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6E91EA3-1A0A-4691-99A3-2AB7BF6F8306}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EC9EFBE-130E-4F5A-BD3E-21521747479F}.Debug|Any CPU.ActiveCfg = Debug
+		{3EC9EFBE-130E-4F5A-BD3E-21521747479F}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

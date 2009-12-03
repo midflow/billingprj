@@ -198,7 +198,7 @@
             this.Controls.Add(this.btnCopy);
             this.Controls.Add(this.btnClose);
             this.Name = "DataCopy";
-            this.Text = "DataCopy";
+            this.Text = "Tổng hợp dữ liệu";
             this.Load += new System.EventHandler(this.DataCopy_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
