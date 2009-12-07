@@ -97,9 +97,9 @@ namespace DataCollect
                 cmd.Parameters.Add("@thangnam", SqlDbType.NVarChar, 6).Value = dtpFrom.Value.AddMonths(-1).ToString("MMyyyy");
                 cmd.Parameters.Add("@ngaydauthang", SqlDbType.DateTime).Value = "01 " + dtpFrom.Value.ToString("MMM yyyy");
                 if (DateTime.Now.Month > dtpTo.Value.Month)
-                    cmd.Parameters.Add("@chaythangcu", SqlDbType.Bit).Value = 0;
+                    cmd.Parameters.Add("@chaythangcu", SqlDbType.Bit).Value = 1;
                 else
-                    cmd.Parameters.Add("@chaythangcu", SqlDbType.bit).Value = 1;
+                    cmd.Parameters.Add("@chaythangcu", SqlDbType.bit).Value = 0;
 
                 if (dtpFrom.Value.ToString("dd MMM yyyy") == "01 " + dtpFrom.Value.ToString("MMM yyyy"))
                     cmd.Parameters.Add("@thangmoi", SqlDbType.Bit).Value = 1;
@@ -516,9 +516,9 @@ namespace DataCollect
                 else
                     cmd.Parameters.Add("@thangmoi", SqlDbType.Bit).Value = 0;
                 if (DateTime.Now.Month > dtpTo.Value.Month)
-                    cmd.Parameters.Add("@chaythangcu", SqlDbType.Bit).Value = 0;
+                    cmd.Parameters.Add("@chaythangcu", SqlDbType.Bit).Value = 1;
                 else
-                    cmd.Parameters.Add("@chaythangcu", SqlDbType.bit).Value = 1;
+                    cmd.Parameters.Add("@chaythangcu", SqlDbType.bit).Value = 0;
 
                 //if (cnn.State != ConnectionState.Open) 
                 cmd.Connection = TargetConn;
