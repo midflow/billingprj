@@ -59,10 +59,20 @@ namespace DataCollect
                 }
                 label3.Text = "Đang sao chép dữ liệu di động";
                 SaoChepDiDong();
-                label3.Text = "Đang sao chép tblCTHT";
-                SaoChepCTHT();
-                label3.Text = "Đang sao chép tblCTCTHT";
-                SaoChepCTCTHT();
+                if (DateTime.Now.Month > dtpTo.Value.Month)
+                {
+                    label3.Text = "Đang sao chép tblCT";
+                    SaoChepCT();
+                    label3.Text = "Đang sao chép tblCTCT";
+                    SaoChepCTCT();                    
+                }
+                else
+                {
+                    label3.Text = "Đang sao chép tblCTHT";
+                    SaoChepCTHT();
+                    label3.Text = "Đang sao chép tblCTCTHT";
+                    SaoChepCTCTHT();                   
+                }
                 label3.Text = "Đang sao chép dữ liệu mới";
                 SaoChepDuLieuMoi();
                 //this.Cursor = Cursors.Default;
@@ -86,6 +96,11 @@ namespace DataCollect
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@thangnam", SqlDbType.NVarChar, 6).Value = dtpFrom.Value.AddMonths(-1).ToString("MMyyyy");
                 cmd.Parameters.Add("@ngaydauthang", SqlDbType.DateTime).Value = "01 " + dtpFrom.Value.ToString("MMM yyyy");
+                if (DateTime.Now.Month > dtpTo.Value.Month)
+                    cmd.Parameters.Add("@chaythangcu", SqlDbType.Bit).Value = 0;
+                else
+                    cmd.Parameters.Add("@chaythangcu", SqlDbType.bit).Value = 1;
+
                 if (dtpFrom.Value.ToString("dd MMM yyyy") == "01 " + dtpFrom.Value.ToString("MMM yyyy"))
                     cmd.Parameters.Add("@thangmoi", SqlDbType.Bit).Value = 1;
                 else
@@ -156,64 +171,86 @@ namespace DataCollect
         }
 
         private void SaoChepCTCT()
-        {
-            SqlConnection cnn = new SqlConnection(global::DataCollect.Properties.Settings.Default.DB_4ConnectionString);
+        {            
+            if (TargetConn.State == ConnectionState.Closed)
+                TargetConn.Open();
+            SqlTransaction trans = TargetConn.BeginTransaction();
+            try
+            {
+                // Getting source data
+                cmd = new SqlCommand("select * from CTCT where CTid in (select ID from tblCT where NgayCT >= '" + "01 " + dtpFrom.Value.ToString("MMM yyy") + "')", cnn);
+                cmd.CommandTimeout = 0;
+                SourceConn.Open();
+                SqlDataReader rdr = cmd.ExecuteReader();
 
+                // Initializing an SqlBulkCopy object
+                SqlBulkCopy sbc = new SqlBulkCopy(TargetConn, SqlBulkCopyOptions.KeepIdentity, trans);
+                sbc.BulkCopyTimeout = 6000;
+                sbc.BatchSize = 50000;
 
-            // Getting source data
-            SqlCommand cmd = new SqlCommand("select * from CTCT where CTid in (select ID from tblCT where NgayCT between '" + dtpFrom.Value.ToString("dd MMM yyy") + "' and '" + dtpTo.Value.ToString("dd MMM yyy") + "')", cnn);
-            cmd.CommandTimeout = 0;
-            cnn.Open();
-            SqlDataReader rdr = cmd.ExecuteReader();
-
-            // Initializing an SqlBulkCopy object
-            SqlBulkCopy sbc = new SqlBulkCopy(global::DataCollect.Properties.Settings.Default.TargetConn);
-            sbc.BulkCopyTimeout = 6000;
-            sbc.BatchSize = 50000;
-
-            // Copying data to destination
-            sbc.DestinationTableName = "dbo.tblCCTT";
-            //DataTable dt = new DataTable();
-            //dt.Load(rdr);
-            sbc.WriteToServer(rdr);
-
-            // Closing connection and the others
-            sbc.Close();
-            rdr.Close();
-            cnn.Close();
+                // Copying data to destination
+                sbc.DestinationTableName = "dbo.tblCTCT";
+                //DataTable dt = new DataTable();
+                //dt.Load(rdr);
+                sbc.WriteToServer(rdr);
+                sbc.Close();
+                rdr.Close();
+                trans.Commit();
+            }
+            catch
+            {
+                trans.Rollback();
+                MessageBox.Show("Lỗi ở phần sao chép dữ liệu bảng tblctctht");
+            }
+            finally
+            {
+                // Closing connection and the others
+                trans.Dispose();
+                TargetConn.Close();
+                SourceConn.Close();
+            }
         }
 
         private void SaoChepCT()
         {
-            // Establishing connection
-            //SqlConnectionStringBuilder cb = new SqlConnectionStringBuilder();
-            //cb.DataSource = "SQLProduction";
-            //cb.InitialCatalog = "Sales";
-            //cb.IntegratedSecurity = true;
-            SqlConnection cnn = new SqlConnection(global::DataCollect.Properties.Settings.Default.SourceConn);
+            if (TargetConn.State == ConnectionState.Closed)
+                TargetConn.Open();
+            SqlTransaction trans = TargetConn.BeginTransaction();
+            try
+            {
+                // Getting source data
+                cmd = new SqlCommand("select * from tblCT where ngayct >= '" + "01 " + dtpFrom.Value.ToString("MMM yyy"), SourceConn);
+                cmd.CommandTimeout = 0;
+                SourceConn.Open();
+                SqlDataReader rdr = cmd.ExecuteReader();
 
+                // Initializing an SqlBulkCopy object
 
-            // Getting source data
-            SqlCommand cmd = new SqlCommand("select * from tblCT where NgayCT between '" + dtpFrom.Value.ToString("dd MMM yyy") + "' and '" + dtpTo.Value.ToString("dd MMM yyy") + "'", cnn);
-            cmd.CommandTimeout = 0;
-            cnn.Open();
-            SqlDataReader rdr = cmd.ExecuteReader();
+                SqlBulkCopy sbc = new SqlBulkCopy(TargetConn, SqlBulkCopyOptions.KeepIdentity, trans);
+                sbc.BulkCopyTimeout = 6000;
+                sbc.BatchSize = 50000;
 
-            // Initializing an SqlBulkCopy object
-            SqlBulkCopy sbc = new SqlBulkCopy(global::DataCollect.Properties.Settings.Default.TargetConn);
-            sbc.BulkCopyTimeout = 6000;
-            sbc.BatchSize = 50000;
-
-            // Copying data to destination
-            sbc.DestinationTableName = "dbo.tblCT";
-            //DataTable dt = new DataTable();
-            //dt.Load(rdr);
-            sbc.WriteToServer(rdr);
-
-            // Closing connection and the others
-            sbc.Close();
-            rdr.Close();
-            cnn.Close();
+                // Copying data to destination
+                sbc.DestinationTableName = "dbo.tblCT";
+                //DataTable dt = new DataTable();
+                //dt.Load(rdr);
+                sbc.WriteToServer(rdr);
+                sbc.Close();
+                rdr.Close();
+                trans.Commit();
+            }
+            catch
+            {
+                MessageBox.Show("Lỗi ở phần sao chép dữ liệu bảng tblctht");
+                trans.Rollback();
+            }
+            finally
+            {
+                // Closing connection and the others
+                trans.Dispose();
+                TargetConn.Close();
+                SourceConn.Close();
+            }
         }
 
         private void SaoChepCTCTHT()
@@ -478,6 +515,10 @@ namespace DataCollect
                     cmd.Parameters.Add("@thangmoi", SqlDbType.Bit).Value = 1;
                 else
                     cmd.Parameters.Add("@thangmoi", SqlDbType.Bit).Value = 0;
+                if (DateTime.Now.Month > dtpTo.Value.Month)
+                    cmd.Parameters.Add("@chaythangcu", SqlDbType.Bit).Value = 0;
+                else
+                    cmd.Parameters.Add("@chaythangcu", SqlDbType.bit).Value = 1;
 
                 //if (cnn.State != ConnectionState.Open) 
                 cmd.Connection = TargetConn;
