@@ -16,7 +16,7 @@ namespace DataCollect
         SqlConnection SourceConn = new SqlConnection(global::DataCollect.Properties.Settings.Default.SourceConn);
         string filename;
         SqlCommand cmd;
-        int process=0;
+        int process = 0;
         DateTime Batdau;
         DateTime Ketthuc;
 
@@ -39,9 +39,9 @@ namespace DataCollect
             timer1.Start();
             pbRun.Visible = true;
             setbuttonStatus(false);
-            backgroundWorker1.RunWorkerAsync();   
+            backgroundWorker1.RunWorkerAsync();
         }
-       
+
         private void SaoChepDuLieu()
         {
             try
@@ -59,32 +59,30 @@ namespace DataCollect
                 }
                 label3.Text = "Đang sao chép dữ liệu di động";
                 SaoChepDiDong();
-                if (DateTime.Now.Month > dtpTo.Value.Month)
-                {
-                    label3.Text = "Đang sao chép tblCT";
-                    SaoChepCT();
-                    label3.Text = "Đang sao chép tblCTCT";
-                    SaoChepCTCT();                    
-                }
-                else
-                {
-                    label3.Text = "Đang sao chép tblCTHT";
-                    SaoChepCTHT();
-                    label3.Text = "Đang sao chép tblCTCTHT";
-                    SaoChepCTCTHT();                   
-                }
+
+                label3.Text = "Đang sao chép tblCT";
+                SaoChepCT();
+                label3.Text = "Đang sao chép tblCTCT";
+                SaoChepCTCT();
+
+                label3.Text = "Đang sao chép tblCTHT";
+                SaoChepCTHT();
+                label3.Text = "Đang sao chép tblCTCTHT";
+                SaoChepCTCTHT();
+
                 label3.Text = "Đang sao chép dữ liệu mới";
                 SaoChepDuLieuMoi();
                 //this.Cursor = Cursors.Default;
-                label3.Text="Hoàn thành sao chép dữ liệu! Đang tổng hợp báo cáo ...";
+                label3.Text = "Hoàn thành sao chép dữ liệu! Đang tổng hợp báo cáo ...";
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
                 MessageBox.Show("Lỗi phần sao chép dữ liệu");
-            }            
+                throw ex;
+            }
         }
-        
+
         private void SaoChepDuLieuMoi()
         {
             if (TargetConn.State == ConnectionState.Closed)
@@ -99,7 +97,7 @@ namespace DataCollect
                 if (DateTime.Now.Month > dtpTo.Value.Month)
                     cmd.Parameters.Add("@chaythangcu", SqlDbType.Bit).Value = 1;
                 else
-                    cmd.Parameters.Add("@chaythangcu", SqlDbType.bit).Value = 0;
+                    cmd.Parameters.Add("@chaythangcu", SqlDbType.Bit).Value = 0;
 
                 if (dtpFrom.Value.ToString("dd MMM yyyy") == "01 " + dtpFrom.Value.ToString("MMM yyyy"))
                     cmd.Parameters.Add("@thangmoi", SqlDbType.Bit).Value = 1;
@@ -139,7 +137,7 @@ namespace DataCollect
 
                 //Create a dbDatareader to the dbf file
                 if (TargetConn.State == ConnectionState.Closed)
-                TargetConn.Open();
+                    TargetConn.Open();
                 SqlTransaction trans = TargetConn.BeginTransaction();
                 using (OdbcDataReader dr = command.ExecuteReader())
                 {
@@ -154,7 +152,7 @@ namespace DataCollect
                         }
                         trans.Commit();
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         MessageBox.Show(ex.ToString());
                         MessageBox.Show("Lỗi phần sao chép dữ liệu di động");
@@ -165,20 +163,20 @@ namespace DataCollect
                         connection.Close();
                         trans.Dispose();
                     }
-                }                
+                }
             }
 
         }
 
         private void SaoChepCTCT()
-        {            
+        {
             if (TargetConn.State == ConnectionState.Closed)
                 TargetConn.Open();
             SqlTransaction trans = TargetConn.BeginTransaction();
             try
             {
                 // Getting source data
-                cmd = new SqlCommand("select * from CTCT where CTid in (select ID from tblCT where NgayCT >= '" + "01 " + dtpFrom.Value.ToString("MMM yyy") + "')", cnn);
+                cmd = new SqlCommand("select * from tblCTCT where CTid in (select ID from tblCT where NgayCT >= '" + "01 " + dtpFrom.Value.ToString("MMM yyy") + "')", SourceConn);
                 cmd.CommandTimeout = 0;
                 SourceConn.Open();
                 SqlDataReader rdr = cmd.ExecuteReader();
@@ -197,9 +195,10 @@ namespace DataCollect
                 rdr.Close();
                 trans.Commit();
             }
-            catch
+            catch (Exception ex)
             {
                 trans.Rollback();
+                MessageBox.Show(ex.ToString());
                 MessageBox.Show("Lỗi ở phần sao chép dữ liệu bảng tblctctht");
             }
             finally
@@ -219,7 +218,7 @@ namespace DataCollect
             try
             {
                 // Getting source data
-                cmd = new SqlCommand("select * from tblCT where ngayct >= '" + "01 " + dtpFrom.Value.ToString("MMM yyy"), SourceConn);
+                cmd = new SqlCommand("select * from tblCT where ngayct >= '" + "01 " + dtpFrom.Value.ToString("MMM yyy") + "'", SourceConn);
                 cmd.CommandTimeout = 0;
                 SourceConn.Open();
                 SqlDataReader rdr = cmd.ExecuteReader();
@@ -239,8 +238,9 @@ namespace DataCollect
                 rdr.Close();
                 trans.Commit();
             }
-            catch
+            catch (Exception ex)
             {
+                MessageBox.Show(ex.ToString());
                 MessageBox.Show("Lỗi ở phần sao chép dữ liệu bảng tblctht");
                 trans.Rollback();
             }
@@ -296,8 +296,8 @@ namespace DataCollect
 
         private void SaoChepCTHT()
         {
-            if (TargetConn.State==ConnectionState.Closed)
-            TargetConn.Open();
+            if (TargetConn.State == ConnectionState.Closed)
+                TargetConn.Open();
             SqlTransaction trans = TargetConn.BeginTransaction();
             try
             {
@@ -339,7 +339,7 @@ namespace DataCollect
         private void SaoChepThueBao()
         {
             if (TargetConn.State == ConnectionState.Closed)
-            TargetConn.Open();
+                TargetConn.Open();
             //SqlTransaction transaction = TargetConn.BeginTransaction();
             try
             {
@@ -361,13 +361,13 @@ namespace DataCollect
                 sbc.DestinationTableName = "dbo.tblThueBao";
                 //DataTable dt = new DataTable();
                 //dt.Load(rdr);
-                
+
                 sbc.WriteToServer(rdr);
                 sbc.Close();
                 rdr.Close();
                 //transaction.Commit();
             }
-            catch(SqlException ex)
+            catch (SqlException ex)
             {
                 MessageBox.Show("Lỗi ở phần sao chép tblthuebao");
                 //transaction.Rollback();
@@ -406,7 +406,7 @@ namespace DataCollect
                 sbc.Close();
                 rdr.Close();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("Lỗi ở phần sao chép tblstt");
                 throw ex;
@@ -443,7 +443,7 @@ namespace DataCollect
                 sbc.Close();
                 rdr.Close();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("Lỗi ở phần sao chép tblsttdidong");
                 throw ex;
@@ -526,15 +526,16 @@ namespace DataCollect
                     TargetConn.Open();
                 cmd.CommandTimeout = 0;
                 cmd.ExecuteNonQuery();
-                label3.Text="Xoá dữ liệu hoàn thành! Đang sao chép dữ liệu";
+                //label3.Text="Xoá dữ liệu hoàn thành! Đang sao chép dữ liệu";
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
                 MessageBox.Show("lỗi khi xoá dữ liệu");
+                throw ex;
             }
             finally
-            {                
+            {
                 TargetConn.Close();
                 //pbRun.Visible = false;
                 //timer1.Enabled = false;
@@ -546,9 +547,9 @@ namespace DataCollect
             if (ofdDidong.ShowDialog() == DialogResult.OK)
             {
                 string temstr = ofdDidong.FileName;
-                string extent = temstr.Substring(temstr.LastIndexOf('.'),4);
+                string extent = temstr.Substring(temstr.LastIndexOf('.'), 4);
                 string[] temarr = temstr.Split('\\');
-                filename = temarr[temarr.Length-1].Replace(extent,"");
+                filename = temarr[temarr.Length - 1].Replace(extent, "");
 
                 string strDir = ofdDidong.FileName.Replace("\\" + filename + extent, "");
                 //filename = filename;
@@ -573,23 +574,23 @@ namespace DataCollect
 
         private void btndelete_Click(object sender, EventArgs e)
         {
-            process=1;
+            process = 1;
             label3.Visible = true;
-            this.Cursor = Cursors.WaitCursor;       
+            this.Cursor = Cursors.WaitCursor;
             timer1.Enabled = true;
             timer1.Start();
             pbRun.Visible = true;
             setbuttonStatus(false);
-            backgroundWorker1.RunWorkerAsync();            
+            backgroundWorker1.RunWorkerAsync();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
             if (pbRun.Value == 100)
                 pbRun.Value = 0;
-            pbRun.Value += 1;        
-           
-            backgroundWorker1.ReportProgress(pbRun.Value);  
+            pbRun.Value += 1;
+
+            backgroundWorker1.ReportProgress(pbRun.Value);
         }
 
         private void btnRun_Click(object sender, EventArgs e)
@@ -601,7 +602,7 @@ namespace DataCollect
             timer1.Start();
             pbRun.Visible = true;
             setbuttonStatus(false);
-            backgroundWorker1.RunWorkerAsync();            
+            backgroundWorker1.RunWorkerAsync();
         }
 
         private void ChayTongHop()
@@ -633,11 +634,11 @@ namespace DataCollect
                 TargetConn.Close();
                 label3.Text = "Kết thúc với thời gian " + (Ketthuc - Batdau);
                 //this.Cursor = Cursors.Default;
-            } 
+            }
         }
-        
+
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
-        {            
+        {
             //System.ComponentModel.BackgroundWorker worker = (System.ComponentModel.BackgroundWorker)sender;           
             switch (process)
             {
@@ -653,16 +654,25 @@ namespace DataCollect
                 case 4:
                     ChayTatCa();
                     break;
-            }                        
+            }
         }
 
         private void ChayTatCa()
         {
             Batdau = DateTime.Now;
-            XoaDuLieu();
-            SaoChepDuLieu();
-            ChayTongHop();
-            Ketthuc = DateTime.Now;           
+            try
+            {
+                XoaDuLieu();
+                SaoChepDuLieu();
+                ChayTongHop();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+                MessageBox.Show("Chương trình dừng do lỗi");
+                return;
+            }
+            Ketthuc = DateTime.Now;
         }
 
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
