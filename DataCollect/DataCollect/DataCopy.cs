@@ -515,10 +515,10 @@ namespace DataCollect
                     cmd.Parameters.Add("@thangmoi", SqlDbType.Bit).Value = 1;
                 else
                     cmd.Parameters.Add("@thangmoi", SqlDbType.Bit).Value = 0;
-                if (DateTime.Now.Month > dtpTo.Value.Month)
-                    cmd.Parameters.Add("@chaythangcu", SqlDbType.Bit).Value = 1;
-                else
-                    cmd.Parameters.Add("@chaythangcu", SqlDbType.bit).Value = 0;
+                //if (DateTime.Now.Month > dtpTo.Value.Month)
+                //    cmd.Parameters.Add("@chaythangcu", SqlDbType.Bit).Value = 1;
+                //else
+                //    cmd.Parameters.Add("@chaythangcu", SqlDbType.bit).Value = 0;
 
                 //if (cnn.State != ConnectionState.Open) 
                 cmd.Connection = TargetConn;
