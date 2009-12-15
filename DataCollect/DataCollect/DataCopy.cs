@@ -94,10 +94,10 @@ namespace DataCollect
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@thangnam", SqlDbType.NVarChar, 6).Value = dtpFrom.Value.AddMonths(-1).ToString("MMyyyy");
                 cmd.Parameters.Add("@ngaydauthang", SqlDbType.DateTime).Value = "01 " + dtpFrom.Value.ToString("MMM yyyy");
-                if (DateTime.Now.Month > dtpTo.Value.Month)
-                    cmd.Parameters.Add("@chaythangcu", SqlDbType.Bit).Value = 1;
-                else
-                    cmd.Parameters.Add("@chaythangcu", SqlDbType.Bit).Value = 0;
+                //if (DateTime.Now.Month > dtpTo.Value.Month)
+                //    cmd.Parameters.Add("@chaythangcu", SqlDbType.Bit).Value = 1;
+                //else
+                //    cmd.Parameters.Add("@chaythangcu", SqlDbType.Bit).Value = 0;
 
                 if (dtpFrom.Value.ToString("dd MMM yyyy") == "01 " + dtpFrom.Value.ToString("MMM yyyy"))
                     cmd.Parameters.Add("@thangmoi", SqlDbType.Bit).Value = 1;
@@ -386,7 +386,8 @@ namespace DataCollect
             try
             {
                 // Getting source data
-                cmd = new SqlCommand("select * from tblstt where thangnam='" + dtpTo.Value.AddMonths(-1).ToString("MMyyyy") + "'", SourceConn);
+                cmd = new SqlCommand("SELECT [ID],[TenThuebao],[Diachi],[Line],[MCQ],[LinhVucID],[DonviID],[TuyenID],[Thangnam]," 
+                    + " [NODK],[PS],[DT],[CONNO],[TuoiNo],[DTNODK],[DTPS],[KHID]  FROM TBLSTT where thangnam='" + dtpTo.Value.AddMonths(-1).ToString("MMyyyy") + "'", SourceConn);
                 cmd.CommandTimeout = 0;
                 if (SourceConn.State == ConnectionState.Closed)
                     SourceConn.Open();
@@ -408,6 +409,7 @@ namespace DataCollect
             }
             catch (Exception ex)
             {
+                MessageBox.Show(ex.ToString());
                 MessageBox.Show("Lỗi ở phần sao chép tblstt");
                 throw ex;
             }
@@ -424,7 +426,8 @@ namespace DataCollect
             try
             {
                 // Getting source data
-                cmd = new SqlCommand("select * from tblsttdidong where thangnam='" + dtpTo.Value.AddMonths(-1).ToString("MMyyyy") + "'", SourceConn);
+                cmd = new SqlCommand("SELECT [ID],[TenKH],[DIACHI],[LINE],[MCQ],[LinhVucID],[DONVIID],[TuyenID],[THANGNAM],[NODK],[PS],[DT]," 
+                    + " [CONNO],[NoTTCT],[TUOINO],[KHID] FROM TBLSTTDIDONG where thangnam='" + dtpTo.Value.AddMonths(-1).ToString("MMyyyy") + "'", SourceConn);
                 cmd.CommandTimeout = 0;
                 if (SourceConn.State == ConnectionState.Closed)
                     SourceConn.Open();
