@@ -28,62 +28,81 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnRun = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.btnSelectFile = new System.Windows.Forms.Button();
             this.fbdDidong = new System.Windows.Forms.FolderBrowserDialog();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.saoChépToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.choNăm2009ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.choNăm2010ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.trợGiúpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // btnRun
+            // menuStrip1
             // 
-            this.btnRun.Location = new System.Drawing.Point(183, 203);
-            this.btnRun.Name = "btnRun";
-            this.btnRun.Size = new System.Drawing.Size(75, 23);
-            this.btnRun.TabIndex = 1;
-            this.btnRun.Text = "Sao chép";
-            this.btnRun.UseVisualStyleBackColor = true;
-            this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saoChépToolStripMenuItem,
+            this.trợGiúpToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(750, 24);
+            this.menuStrip1.TabIndex = 5;
+            this.menuStrip1.Text = "menuStrip1";
             // 
-            // button2
+            // saoChépToolStripMenuItem
             // 
-            this.button2.Location = new System.Drawing.Point(297, 203);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "Thoát";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.saoChépToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.choNăm2009ToolStripMenuItem,
+            this.choNăm2010ToolStripMenuItem});
+            this.saoChépToolStripMenuItem.Name = "saoChépToolStripMenuItem";
+            this.saoChépToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
+            this.saoChépToolStripMenuItem.Text = "Sao chép";
             // 
-            // btnSelectFile
+            // choNăm2009ToolStripMenuItem
             // 
-            this.btnSelectFile.Location = new System.Drawing.Point(68, 203);
-            this.btnSelectFile.Name = "btnSelectFile";
-            this.btnSelectFile.Size = new System.Drawing.Size(75, 23);
-            this.btnSelectFile.TabIndex = 3;
-            this.btnSelectFile.Text = "Chọn tệp";
-            this.btnSelectFile.UseVisualStyleBackColor = true;
-            this.btnSelectFile.Click += new System.EventHandler(this.btnSelectFile_Click);
+            this.choNăm2009ToolStripMenuItem.Name = "choNăm2009ToolStripMenuItem";
+            this.choNăm2009ToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.choNăm2009ToolStripMenuItem.Text = "Cho năm 2009";
+            this.choNăm2009ToolStripMenuItem.Click += new System.EventHandler(this.choNăm2009ToolStripMenuItem_Click);
+            // 
+            // choNăm2010ToolStripMenuItem
+            // 
+            this.choNăm2010ToolStripMenuItem.Name = "choNăm2010ToolStripMenuItem";
+            this.choNăm2010ToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.choNăm2010ToolStripMenuItem.Text = "Cho năm 2010";
+            this.choNăm2010ToolStripMenuItem.Click += new System.EventHandler(this.choNăm2010ToolStripMenuItem_Click);
+            // 
+            // trợGiúpToolStripMenuItem
+            // 
+            this.trợGiúpToolStripMenuItem.Name = "trợGiúpToolStripMenuItem";
+            this.trợGiúpToolStripMenuItem.Size = new System.Drawing.Size(64, 20);
+            this.trợGiúpToolStripMenuItem.Text = "Trợ giúp";
             // 
             // frmTongHop
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(394, 253);
-            this.Controls.Add(this.btnSelectFile);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.btnRun);
+            this.ClientSize = new System.Drawing.Size(750, 451);
+            this.Controls.Add(this.menuStrip1);
+            this.IsMdiContainer = true;
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "frmTongHop";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Sao chép dữ liệu di động";
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button btnRun;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button btnSelectFile;
         private System.Windows.Forms.FolderBrowserDialog fbdDidong;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem saoChépToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem choNăm2009ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem choNăm2010ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem trợGiúpToolStripMenuItem;
     }
 }
 

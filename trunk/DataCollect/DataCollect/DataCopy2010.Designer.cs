@@ -1,6 +1,6 @@
 ﻿namespace DataCollect
 {
-    partial class DataCopy
+    partial class DataCopy2010
     {
         /// <summary>
         /// Required designer variable.
@@ -180,7 +180,7 @@
             this.chkRunAll.Text = "Chạy toàn bộ";
             this.chkRunAll.UseVisualStyleBackColor = true;
             // 
-            // DataCopy
+            // DataCopy2010
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -198,10 +198,10 @@
             this.Controls.Add(this.btnRun);
             this.Controls.Add(this.btnCopy);
             this.Controls.Add(this.btnClose);
-            this.Name = "DataCopy";
+            this.Name = "DataCopy2010";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Tổng hợp dữ liệu";
-            this.Load += new System.EventHandler(this.DataCopy_Load);
+            this.Load += new System.EventHandler(this.DataCopy2010_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
