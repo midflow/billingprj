@@ -34,6 +34,7 @@
             this.choNăm2009ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.choNăm2010ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.trợGiúpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.thoátToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -41,7 +42,8 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.saoChépToolStripMenuItem,
-            this.trợGiúpToolStripMenuItem});
+            this.trợGiúpToolStripMenuItem,
+            this.thoátToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(750, 24);
@@ -77,6 +79,13 @@
             this.trợGiúpToolStripMenuItem.Size = new System.Drawing.Size(64, 20);
             this.trợGiúpToolStripMenuItem.Text = "Trợ giúp";
             // 
+            // thoátToolStripMenuItem
+            // 
+            this.thoátToolStripMenuItem.Name = "thoátToolStripMenuItem";
+            this.thoátToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
+            this.thoátToolStripMenuItem.Text = "Thoát";
+            this.thoátToolStripMenuItem.Click += new System.EventHandler(this.thoátToolStripMenuItem_Click);
+            // 
             // frmTongHop
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -103,6 +112,7 @@
         private System.Windows.Forms.ToolStripMenuItem choNăm2009ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem choNăm2010ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem trợGiúpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem thoátToolStripMenuItem;
     }
 }
 
