@@ -14,7 +14,7 @@ namespace DataCollect
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new DataCopy());
+            Application.Run(new frmTongHop());
         }
     }
 }
