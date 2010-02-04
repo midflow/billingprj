@@ -343,7 +343,8 @@ namespace DataCollect
             //SqlTransaction transaction = TargetConn.BeginTransaction();
             try
             {
-                cmd = new SqlCommand("select * from tblThueBao where thangnam='" + dtpTo.Value.AddMonths(-1).ToString("MMyyyy") + "'", SourceConn);
+                cmd = new SqlCommand("select * from tblThueBao where thangnam='"                    
+                    + dtpTo.Value.AddMonths(-1).ToString("MMyyyy") + "'", SourceConn);
                 cmd.CommandTimeout = 0;
                 //cmd.Transaction = transaction;
                 if (SourceConn.State == ConnectionState.Closed)
@@ -387,7 +388,9 @@ namespace DataCollect
             {
                 // Getting source data
                 cmd = new SqlCommand("SELECT [ID],[TenThuebao],[Diachi],[Line],[MCQ],[LinhVucID],[DonviID],[TuyenID],[Thangnam]," 
-                    + " [NODK],[PS],[DT],[CONNO],[TuoiNo],[DTNODK],[DTPS],[KHID]  FROM TBLSTT where thangnam='" + dtpTo.Value.AddMonths(-1).ToString("MMyyyy") + "'", SourceConn);
+                    + " [NODK],[PS],[DT],[CONNO],[TuoiNo],[DTNODK],[DTPS],[KHID]  FROM TBLSTT where thangnam='" 
+                    + dtpTo.Value.AddMonths(-1).ToString("MMyyyy") + "' or thangnam='" 
+                    + dtpTo.Value.AddMonths(-1).ToString("MMyyyy") + "'", SourceConn);
                 cmd.CommandTimeout = 0;
                 if (SourceConn.State == ConnectionState.Closed)
                     SourceConn.Open();
@@ -427,7 +430,8 @@ namespace DataCollect
             {
                 // Getting source data
                 cmd = new SqlCommand("SELECT [ID],[TenKH],[DIACHI],[LINE],[MCQ],[LinhVucID],[DONVIID],[TuyenID],[THANGNAM],[NODK],[PS],[DT]," 
-                    + " [CONNO],[NoTTCT],[TUOINO],[KHID] FROM TBLSTTDIDONG where thangnam='" + dtpTo.Value.AddMonths(-1).ToString("MMyyyy") + "'", SourceConn);
+                    + " [CONNO],[NoTTCT],[TUOINO],[KHID] FROM TBLSTTDIDONG where thangnam='" + dtpTo.Value.AddMonths(-1).ToString("MMyyyy")
+                    + "' or thangnam='" + dtpTo.Value.AddMonths(-2).ToString("MMyyyy") + "'", SourceConn);
                 cmd.CommandTimeout = 0;
                 if (SourceConn.State == ConnectionState.Closed)
                     SourceConn.Open();
