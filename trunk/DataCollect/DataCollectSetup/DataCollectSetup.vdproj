@@ -43,6 +43,19 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+<<<<<<< .mine
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                }
+            }
+=======
             "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
             {
             "Enabled" = "11:TRUE"
@@ -59,6 +72,7 @@
                     }
                 }
             }
+>>>>>>> .r28
         }
         "Release"
         {
@@ -170,20 +184,35 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:DataCollectSetup"
+<<<<<<< .mine
+        "ProductCode" = "8:{B707E11D-D7EA-4675-80E1-FA1A762F477D}"
+        "PackageCode" = "8:{8523AD2D-84F7-4AA2-B553-8229A9F79748}"
+        "UpgradeCode" = "8:{627EB4BF-E12C-44CC-89DD-30DDD89C6569}"
+=======
         "ProductCode" = "8:{74827075-3290-475E-B2FA-55E1A368153F}"
         "PackageCode" = "8:{CA54D9A9-0A26-4A7E-96CD-BECAD2117D30}"
         "UpgradeCode" = "8:{6E35A023-7A4F-4F34-9417-C9BDF95E5135}"
+>>>>>>> .r28
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
+<<<<<<< .mine
+        "ProductVersion" = "8:1.0.1"
+        "Manufacturer" = "8:Default Company Name"
+=======
         "ProductVersion" = "8:1.1.4"
         "Manufacturer" = "8:CT-IN"
+>>>>>>> .r28
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
         "Title" = "8:DataCollect"
         "Subject" = "8:"
+<<<<<<< .mine
+        "ARPCONTACT" = "8:Csoft - CT-IN"
+=======
         "ARPCONTACT" = "8:CT-IN"
+>>>>>>> .r28
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:"
@@ -731,9 +760,6 @@
                 {
                 }
             }
-        }
-        "VJSharpPlugin"
-        {
         }
     }
 }
