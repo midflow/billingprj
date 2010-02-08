@@ -185,7 +185,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(511, 235);
-            this.ControlBox = false;
             this.Controls.Add(this.chkRunAll);
             this.Controls.Add(this.pbRun);
             this.Controls.Add(this.label3);
@@ -198,6 +197,8 @@
             this.Controls.Add(this.btnRun);
             this.Controls.Add(this.btnCopy);
             this.Controls.Add(this.btnClose);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "DataCopy2010";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Tổng hợp dữ liệu";
