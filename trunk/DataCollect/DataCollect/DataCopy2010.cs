@@ -668,9 +668,9 @@ namespace DataCollect
             Batdau = DateTime.Now;
             try
             {
-                //XoaDuLieu();
+                XoaDuLieu();
                 SaoChepDuLieu();
-                //ChayTongHop();
+                ChayTongHop();
             }
             catch (Exception ex)
             {
