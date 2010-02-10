@@ -17,7 +17,7 @@ namespace DataCollect
             InitializeComponent();
         }       
 
-        private void thoátToolStripMenuItem_Click(object sender, EventArgs e)
+        private void thoatToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
         }
