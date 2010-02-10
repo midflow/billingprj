@@ -1,4 +1,4 @@
-using System;
+Ôªøusing System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,23 +15,23 @@ namespace DataCollect
         public frmTongHop()
         {
             InitializeComponent();
+        }       
+
+        private void tho√°tToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
-        private void choN„m2009ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void choNam2009ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DataCopy frm = new DataCopy();
             frm.ShowDialog(this);
         }
 
-        private void choN„m2010ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void choNam2010ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DataCopy2010 frm = new DataCopy2010();
             frm.ShowDialog(this);
-        }
-
-        private void tho·tToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.Close();
         }
 
        

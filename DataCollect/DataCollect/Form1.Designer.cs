@@ -62,16 +62,16 @@
             // choNăm2009ToolStripMenuItem
             // 
             this.choNăm2009ToolStripMenuItem.Name = "choNăm2009ToolStripMenuItem";
-            this.choNăm2009ToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.choNăm2009ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.choNăm2009ToolStripMenuItem.Text = "Cho năm 2009";
-            this.choNăm2009ToolStripMenuItem.Click += new System.EventHandler(this.choNăm2009ToolStripMenuItem_Click);
+            this.choNăm2009ToolStripMenuItem.Click += new System.EventHandler(this.choNam2009ToolStripMenuItem_Click);
             // 
             // choNăm2010ToolStripMenuItem
             // 
             this.choNăm2010ToolStripMenuItem.Name = "choNăm2010ToolStripMenuItem";
-            this.choNăm2010ToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.choNăm2010ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.choNăm2010ToolStripMenuItem.Text = "Cho năm 2010";
-            this.choNăm2010ToolStripMenuItem.Click += new System.EventHandler(this.choNăm2010ToolStripMenuItem_Click);
+            this.choNăm2010ToolStripMenuItem.Click += new System.EventHandler(this.choNam2010ToolStripMenuItem_Click);
             // 
             // trợGiúpToolStripMenuItem
             // 
