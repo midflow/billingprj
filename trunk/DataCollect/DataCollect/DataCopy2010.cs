@@ -176,7 +176,7 @@ namespace DataCollect
             try
             {
                 // Getting source data
-                cmd = new SqlCommand("select * from tblCTCT where CTid in (select ID from tblCT where NgayCT >= '" + "01 " + dtpFrom.Value.ToString("MMM yyy") + "')", SourceConn);
+                cmd = new SqlCommand("select distinct * from tblCTCT where CTid in (select ID from tblCT where NgayCT >= '" + "01 " + dtpFrom.Value.ToString("MMM yyy") + "')", SourceConn);
                 cmd.CommandTimeout = 0;
                 SourceConn.Open();
                 SqlDataReader rdr = cmd.ExecuteReader();
@@ -199,7 +199,7 @@ namespace DataCollect
             {
                 trans.Rollback();
                 MessageBox.Show(ex.ToString());
-                MessageBox.Show("Lỗi ở phần sao chép dữ liệu bảng tblctctht");
+                MessageBox.Show("Lỗi ở phần sao chép dữ liệu bảng tblctct");
             }
             finally
             {
@@ -218,7 +218,7 @@ namespace DataCollect
             try
             {
                 // Getting source data
-                cmd = new SqlCommand("select * from tblCT where ngayct >= '" + "01 " + dtpFrom.Value.ToString("MMM yyy") + "'", SourceConn);
+                cmd = new SqlCommand("select distinct * from tblCT where ngayct >= '" + "01 " + dtpFrom.Value.ToString("MMM yyy") + "'", SourceConn);
                 cmd.CommandTimeout = 0;
                 SourceConn.Open();
                 SqlDataReader rdr = cmd.ExecuteReader();
@@ -231,7 +231,7 @@ namespace DataCollect
 
                 // Copying data to destination
                 sbc.DestinationTableName = "dbo.tblCT";
-                //DataTable dt = new DataTable();
+                //DataTable dt = new DataTable(); 
                 //dt.Load(rdr);
                 sbc.WriteToServer(rdr);
                 sbc.Close();
@@ -241,7 +241,7 @@ namespace DataCollect
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
-                MessageBox.Show("Lỗi ở phần sao chép dữ liệu bảng tblctht");
+                MessageBox.Show("Lỗi ở phần sao chép dữ liệu bảng tblct");
                 trans.Rollback();
             }
             finally
@@ -261,7 +261,7 @@ namespace DataCollect
             try
             {
                 // Getting source data
-                cmd = new SqlCommand("select * from tblCTCTHT", SourceConn);
+                cmd = new SqlCommand("select distinct * from tblCTCTHT", SourceConn);
                 cmd.CommandTimeout = 0;
                 SourceConn.Open();
                 SqlDataReader rdr = cmd.ExecuteReader();
@@ -302,7 +302,7 @@ namespace DataCollect
             try
             {
                 // Getting source data
-                cmd = new SqlCommand("select * from tblCTHT", SourceConn);
+                cmd = new SqlCommand("select distinct * from tblCTHT", SourceConn);
                 cmd.CommandTimeout = 0;
                 SourceConn.Open();
                 SqlDataReader rdr = cmd.ExecuteReader();
