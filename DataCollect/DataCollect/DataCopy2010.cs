@@ -60,10 +60,10 @@ namespace DataCollect
                 label3.Text = "Đang sao chép dữ liệu di động";
                 SaoChepDiDong();
 
-                label3.Text = "Đang sao chép tblCT";
-                SaoChepCT();
-                label3.Text = "Đang sao chép tblCTCT";
-                SaoChepCTCT();
+                //label3.Text = "Đang sao chép tblCT";
+                //SaoChepCT();
+                //label3.Text = "Đang sao chép tblCTCT";
+                //SaoChepCTCT();
 
                 label3.Text = "Đang sao chép tblCTHT";
                 SaoChepCTHT();
