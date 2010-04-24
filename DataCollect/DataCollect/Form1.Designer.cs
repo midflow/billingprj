@@ -33,6 +33,7 @@
             this.saoChépToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.choNăm2009ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.choNăm2010ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.choBaoCaoKiemKeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.trợGiúpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.thoátToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
@@ -54,7 +55,8 @@
             // 
             this.saoChépToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.choNăm2009ToolStripMenuItem,
-            this.choNăm2010ToolStripMenuItem});
+            this.choNăm2010ToolStripMenuItem,
+            this.choBaoCaoKiemKeToolStripMenuItem});
             this.saoChépToolStripMenuItem.Name = "saoChépToolStripMenuItem";
             this.saoChépToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
             this.saoChépToolStripMenuItem.Text = "Sao chép";
@@ -62,16 +64,23 @@
             // choNăm2009ToolStripMenuItem
             // 
             this.choNăm2009ToolStripMenuItem.Name = "choNăm2009ToolStripMenuItem";
-            this.choNăm2009ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.choNăm2009ToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
             this.choNăm2009ToolStripMenuItem.Text = "Cho năm 2009";
             this.choNăm2009ToolStripMenuItem.Click += new System.EventHandler(this.choNam2009ToolStripMenuItem_Click);
             // 
             // choNăm2010ToolStripMenuItem
             // 
             this.choNăm2010ToolStripMenuItem.Name = "choNăm2010ToolStripMenuItem";
-            this.choNăm2010ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.choNăm2010ToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
             this.choNăm2010ToolStripMenuItem.Text = "Cho năm 2010";
             this.choNăm2010ToolStripMenuItem.Click += new System.EventHandler(this.choNam2010ToolStripMenuItem_Click);
+            // 
+            // choBaoCaoKiemKeToolStripMenuItem
+            // 
+            this.choBaoCaoKiemKeToolStripMenuItem.Name = "choBaoCaoKiemKeToolStripMenuItem";
+            this.choBaoCaoKiemKeToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+            this.choBaoCaoKiemKeToolStripMenuItem.Text = "Cho báo cáo kiểm kê 2010";
+            this.choBaoCaoKiemKeToolStripMenuItem.Click += new System.EventHandler(this.choBaoCaoKiemKeToolStripMenuItem_Click);
             // 
             // trợGiúpToolStripMenuItem
             // 
@@ -113,6 +122,7 @@
         private System.Windows.Forms.ToolStripMenuItem choNăm2010ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem trợGiúpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem thoátToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem choBaoCaoKiemKeToolStripMenuItem;
     }
 }
 
