@@ -201,7 +201,7 @@
             this.MinimizeBox = false;
             this.Name = "DataCopy";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Tổng hợp dữ liệu";
+            this.Text = "Tổng hợp dữ liệu năm 2009";
             this.Load += new System.EventHandler(this.DataCopy_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

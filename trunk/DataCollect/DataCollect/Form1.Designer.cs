@@ -58,8 +58,8 @@
             this.choNăm2010ToolStripMenuItem,
             this.choBaoCaoKiemKeToolStripMenuItem});
             this.saoChépToolStripMenuItem.Name = "saoChépToolStripMenuItem";
-            this.saoChépToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
-            this.saoChépToolStripMenuItem.Text = "Sao chép";
+            this.saoChépToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
+            this.saoChépToolStripMenuItem.Text = "Tổng hợp";
             // 
             // choNăm2009ToolStripMenuItem
             // 
@@ -105,7 +105,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "frmTongHop";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Sao chép dữ liệu di động";
+            this.Text = "Tổng hợp dữ liệu báo cáo 3049";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
