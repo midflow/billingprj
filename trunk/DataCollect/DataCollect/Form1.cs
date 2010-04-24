@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -31,6 +31,12 @@ namespace DataCollect
         private void choNam2010ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DataCopy2010 frm = new DataCopy2010();
+            frm.ShowDialog(this);
+        }
+
+        private void choBaoCaoKiemKeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            KiemKe frm = new KiemKe();
             frm.ShowDialog(this);
         }
 
