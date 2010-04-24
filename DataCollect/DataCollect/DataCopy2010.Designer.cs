@@ -44,6 +44,7 @@
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.label3 = new System.Windows.Forms.Label();
             this.chkRunAll = new System.Windows.Forms.CheckBox();
+            this.btnMobileDataCopy = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnCopy
@@ -59,9 +60,9 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(391, 145);
+            this.btnClose.Location = new System.Drawing.Point(391, 214);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(75, 52);
+            this.btnClose.Size = new System.Drawing.Size(75, 25);
             this.btnClose.TabIndex = 2;
             this.btnClose.Text = "Đóng";
             this.btnClose.UseVisualStyleBackColor = true;
@@ -126,7 +127,7 @@
             // 
             // btnRun
             // 
-            this.btnRun.Location = new System.Drawing.Point(310, 145);
+            this.btnRun.Location = new System.Drawing.Point(389, 145);
             this.btnRun.Name = "btnRun";
             this.btnRun.Size = new System.Drawing.Size(75, 52);
             this.btnRun.TabIndex = 3;
@@ -173,18 +174,30 @@
             this.chkRunAll.AutoSize = true;
             this.chkRunAll.Checked = true;
             this.chkRunAll.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkRunAll.Location = new System.Drawing.Point(66, 204);
+            this.chkRunAll.Location = new System.Drawing.Point(66, 219);
             this.chkRunAll.Name = "chkRunAll";
             this.chkRunAll.Size = new System.Drawing.Size(89, 17);
             this.chkRunAll.TabIndex = 7;
             this.chkRunAll.Text = "Chạy toàn bộ";
             this.chkRunAll.UseVisualStyleBackColor = true;
             // 
+            // btnMobileDataCopy
+            // 
+            this.btnMobileDataCopy.Enabled = false;
+            this.btnMobileDataCopy.Location = new System.Drawing.Point(310, 145);
+            this.btnMobileDataCopy.Name = "btnMobileDataCopy";
+            this.btnMobileDataCopy.Size = new System.Drawing.Size(75, 52);
+            this.btnMobileDataCopy.TabIndex = 8;
+            this.btnMobileDataCopy.Text = "Sao chép dữ liệu di động";
+            this.btnMobileDataCopy.UseVisualStyleBackColor = true;
+            this.btnMobileDataCopy.Click += new System.EventHandler(this.button1_Click);
+            // 
             // DataCopy2010
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(511, 235);
+            this.ClientSize = new System.Drawing.Size(511, 252);
+            this.Controls.Add(this.btnMobileDataCopy);
             this.Controls.Add(this.chkRunAll);
             this.Controls.Add(this.pbRun);
             this.Controls.Add(this.label3);
@@ -201,7 +214,7 @@
             this.MinimizeBox = false;
             this.Name = "DataCopy2010";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Tổng hợp dữ liệu";
+            this.Text = "Tổng hợp dữ liệu năm 2010";
             this.Load += new System.EventHandler(this.DataCopy2010_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -225,5 +238,6 @@
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox chkRunAll;
+        private System.Windows.Forms.Button btnMobileDataCopy;
     }
 }

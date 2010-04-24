@@ -559,7 +559,8 @@ namespace DataCollect
 
                 string strDir = ofdDidong.FileName.Replace("\\" + filename + extent, "");
                 //filename = filename;
-                btnCopy.Enabled = true;
+                btnCopy.Enabled = true;                
+                btnMobileDataCopy.Enabled = true;
                 if (ODBCManager.DSNExists("tradidong"))
                     ODBCManager.RemoveDSN("tradidong");
                 ODBCManager.CreateDSN("tradidong", "tra di dong", strDir, "Microsoft FoxPro VFP Driver (*.DBF)", true, ofdDidong.FileName);
@@ -660,6 +661,9 @@ namespace DataCollect
                 case 4:
                     ChayTatCa();
                     break;
+                case 5:
+                    SaoChepDiDong();
+                    break;
             }
         }
 
@@ -691,6 +695,7 @@ namespace DataCollect
             btndelete.Enabled = stt;
             btnSelectFile.Enabled = stt;
             btnCopy.Enabled = stt;
+            btnMobileDataCopy.Enabled = stt;
             btnRun.Enabled = stt;
             btnClose.Enabled = stt;
             dtpFrom.Enabled = stt;
@@ -704,6 +709,20 @@ namespace DataCollect
             this.Cursor = Cursors.Default;
             //label3.Visible = false;
             setbuttonStatus(true);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            process = 5;
+            label3.Visible = true;
+            label3.Text = "Đang sao chép dữ liệu di động";
+            this.Cursor = Cursors.WaitCursor;
+            timer1.Enabled = true;
+            timer1.Start();
+            pbRun.Visible = true;
+            setbuttonStatus(false);
+            backgroundWorker1.RunWorkerAsync();
+            label3.Text = "Đã sao chép dữ liệu di động xong";
         }
     }
 }
