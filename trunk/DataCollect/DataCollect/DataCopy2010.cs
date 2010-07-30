@@ -157,6 +157,7 @@ namespace DataCollect
                         MessageBox.Show(ex.ToString());
                         MessageBox.Show("Lỗi phần sao chép dữ liệu di động");
                         trans.Rollback();
+                        throw ex;
                     }
                     finally
                     {
@@ -397,7 +398,7 @@ namespace DataCollect
 
                 // Initializing an SqlBulkCopy object
 
-                SqlBulkCopy sbc = new SqlBulkCopy(TargetConn.ConnectionString, SqlBulkCopyOptions.UseInternalTransaction);
+                SqlBulkCopy sbc = new SqlBulkCopy(TargetConn.ConnectionString, SqlBulkCopyOptions.KeepIdentity);
                 sbc.BulkCopyTimeout = 6000;
                 sbc.BatchSize = 50000;
 
@@ -437,7 +438,7 @@ namespace DataCollect
                 SqlDataReader rdr = cmd.ExecuteReader();
 
                 // Initializing an SqlBulkCopy object
-                SqlBulkCopy sbc = new SqlBulkCopy(TargetConn.ConnectionString, SqlBulkCopyOptions.UseInternalTransaction);
+                SqlBulkCopy sbc = new SqlBulkCopy(TargetConn.ConnectionString, SqlBulkCopyOptions.KeepIdentity);
                 sbc.BulkCopyTimeout = 6000;
                 sbc.BatchSize = 50000;
 
@@ -646,24 +647,33 @@ namespace DataCollect
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-            //System.ComponentModel.BackgroundWorker worker = (System.ComponentModel.BackgroundWorker)sender;           
-            switch (process)
+            //System.ComponentModel.BackgroundWorker worker = (System.ComponentModel.BackgroundWorker)sender; 
+            try
             {
-                case 1:
-                    XoaDuLieu();
-                    break;
-                case 2:
-                    SaoChepDuLieu();
-                    break;
-                case 3:
-                    ChayTongHop();
-                    break;
-                case 4:
-                    ChayTatCa();
-                    break;
-                case 5:
-                    SaoChepDiDong();
-                    break;
+                switch (process)
+                {
+                    case 1:
+                        XoaDuLieu();
+                        break;
+                    case 2:
+                        SaoChepDuLieu();
+                        break;
+                    case 3:
+                        ChayTongHop();
+                        break;
+                    case 4:
+                        ChayTatCa();
+                        break;
+                    case 5:
+                        SaoChepDiDong();
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                backgroundWorker1_RunWorkerCompleted(null, null);
+                MessageBox.Show(ex.ToString());
+                return;
             }
         }
 
