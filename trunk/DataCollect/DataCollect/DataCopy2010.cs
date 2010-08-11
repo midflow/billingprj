@@ -53,7 +53,7 @@ namespace DataCollect
                     SaoChepSTT();
                     label3.Text = "Đang sao chép tblSTTDD";
                     SaoChepSTTDD();
-                    label3.Text = "Đang sao chép tblSTTthuebao";
+                    label3.Text = "Đang sao chép tblthuebao";
                     SaoChepThueBao();
                     //SaoChepThueBao_CN();
                 }
@@ -132,7 +132,7 @@ namespace DataCollect
             //create connection to the DBF file
             using (OdbcConnection connection = new OdbcConnection(dbfConnectionString))
             {
-                OdbcCommand command = new OdbcCommand("Select * from " + filename, connection);
+                OdbcCommand command = new OdbcCommand("Select somay, ngay_tt, tientra from " + filename, connection);
                 connection.Open();
 
                 //Create a dbDatareader to the dbf file
