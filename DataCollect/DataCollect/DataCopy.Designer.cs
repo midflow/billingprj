@@ -70,9 +70,11 @@
             // dtpFrom
             // 
             this.dtpFrom.Location = new System.Drawing.Point(163, 12);
+            this.dtpFrom.MaxDate = new System.DateTime(2009, 12, 31, 0, 0, 0, 0);
             this.dtpFrom.Name = "dtpFrom";
             this.dtpFrom.Size = new System.Drawing.Size(222, 20);
             this.dtpFrom.TabIndex = 4;
+            this.dtpFrom.Value = new System.DateTime(2009, 12, 31, 0, 0, 0, 0);
             // 
             // label1
             // 
@@ -86,9 +88,11 @@
             // dtpTo
             // 
             this.dtpTo.Location = new System.Drawing.Point(163, 53);
+            this.dtpTo.MaxDate = new System.DateTime(2009, 12, 31, 0, 0, 0, 0);
             this.dtpTo.Name = "dtpTo";
             this.dtpTo.Size = new System.Drawing.Size(222, 20);
             this.dtpTo.TabIndex = 4;
+            this.dtpTo.Value = new System.DateTime(2009, 12, 31, 0, 0, 0, 0);
             // 
             // label2
             // 
