@@ -640,7 +640,7 @@ namespace DataCollect
             {
                 TargetConn.Close();
                 TimeSpan ts = Ketthuc - Batdau;
-                label3.Text = "Kết thúc với thời gian " + ts.Minutes.ToString();
+                label3.Text = "Kết thúc với thời gian " + ts.ToString();
                 //this.Cursor = Cursors.Default;
             }
         }

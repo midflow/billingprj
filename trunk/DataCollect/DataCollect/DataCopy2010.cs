@@ -17,8 +17,8 @@ namespace DataCollect
         string filename;
         SqlCommand cmd;
         int process = 0;
-        DateTime Batdau;
-        DateTime Ketthuc;
+        static DateTime Batdau;
+        static DateTime Ketthuc;
 
         public DataCopy2010()
         {
@@ -568,6 +568,7 @@ namespace DataCollect
                 //SaoChepDiDong();
                 if (chkRunAll.Checked)
                 {
+                    Batdau = DateTime.Now;
                     process = 4;
                     label3.Visible = true;
                     this.Cursor = Cursors.WaitCursor;
@@ -603,6 +604,7 @@ namespace DataCollect
 
         private void btnRun_Click(object sender, EventArgs e)
         {
+            Batdau = DateTime.Now;
             process = 3;
             label3.Visible = true;
             this.Cursor = Cursors.WaitCursor;
@@ -639,15 +641,14 @@ namespace DataCollect
             }
             finally
             {
-                TargetConn.Close();
-                label3.Text = "Kết thúc với thời gian " + (Ketthuc - Batdau);
+                TargetConn.Close();               
                 //this.Cursor = Cursors.Default;
             }
         }
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-            //System.ComponentModel.BackgroundWorker worker = (System.ComponentModel.BackgroundWorker)sender; 
+            //System.ComponentModel.BackgroundWorker worker = (System.ComponentModel.BackgroundWorker)sender;            
             try
             {
                 switch (process)
@@ -679,11 +680,11 @@ namespace DataCollect
 
         private void ChayTatCa()
         {
-            Batdau = DateTime.Now;
+            
             try
             {
-                XoaDuLieu();
-                SaoChepDuLieu();
+               // XoaDuLieu();
+               // SaoChepDuLieu();
                 ChayTongHop();
             }
             catch (Exception ex)
@@ -691,8 +692,7 @@ namespace DataCollect
                 MessageBox.Show(ex.ToString());
                 MessageBox.Show("Chương trình dừng do lỗi");
                 return;
-            }
-            Ketthuc = DateTime.Now;
+            }           
         }
 
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -719,6 +719,9 @@ namespace DataCollect
             this.Cursor = Cursors.Default;
             //label3.Visible = false;
             setbuttonStatus(true);
+            Ketthuc = DateTime.Now;
+            TimeSpan ts = Ketthuc - Batdau;
+            label3.Text = "Kết thúc với thời gian " + ts.ToString();
         }
 
         private void button1_Click(object sender, EventArgs e)
