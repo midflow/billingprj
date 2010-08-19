@@ -631,6 +631,7 @@ namespace DataCollect
                 cmd.CommandTimeout = 0;
                 cmd.ExecuteNonQuery();
                 tran.Commit();
+                Ketthuc = DateTime.Now;
                 MessageBox.Show("Tổng hợp xong báo cáo");
             }
             catch (SqlException ex)
@@ -718,8 +719,7 @@ namespace DataCollect
             pbRun.Visible = false;
             this.Cursor = Cursors.Default;
             //label3.Visible = false;
-            setbuttonStatus(true);
-            Ketthuc = DateTime.Now;
+            setbuttonStatus(true);            
             TimeSpan ts = Ketthuc - Batdau;
             label3.Text = "Kết thúc với thời gian " + ts.ToString();
         }
