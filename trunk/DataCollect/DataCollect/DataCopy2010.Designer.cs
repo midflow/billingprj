@@ -45,6 +45,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.chkRunAll = new System.Windows.Forms.CheckBox();
             this.btnMobileDataCopy = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnCopy
@@ -154,6 +155,7 @@
             // backgroundWorker1
             // 
             this.backgroundWorker1.WorkerReportsProgress = true;
+            this.backgroundWorker1.WorkerSupportsCancellation = true;
             this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
             this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
             this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
@@ -192,11 +194,21 @@
             this.btnMobileDataCopy.UseVisualStyleBackColor = true;
             this.btnMobileDataCopy.Click += new System.EventHandler(this.button1_Click);
             // 
+            // label4
+            // 
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.label4.Location = new System.Drawing.Point(195, 216);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(145, 20);
+            this.label4.TabIndex = 9;
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // DataCopy2010
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(511, 252);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.btnMobileDataCopy);
             this.Controls.Add(this.chkRunAll);
             this.Controls.Add(this.pbRun);
@@ -216,6 +228,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Tổng hợp dữ liệu năm 2010";
             this.Load += new System.EventHandler(this.DataCopy2010_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DataCopy2010_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -239,5 +252,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox chkRunAll;
         private System.Windows.Forms.Button btnMobileDataCopy;
+        private System.Windows.Forms.Label label4;
     }
 }

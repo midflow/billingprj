@@ -132,7 +132,7 @@ namespace DataCollect
             //create connection to the DBF file
             using (OdbcConnection connection = new OdbcConnection(dbfConnectionString))
             {
-                OdbcCommand command = new OdbcCommand("Select somay, ngay_tt, tientra from " + filename, connection);
+                OdbcCommand command = new OdbcCommand("Select ma_tb, ngay_tt, tongtra from " + filename, connection);
                 connection.Open();
 
                 //Create a dbDatareader to the dbf file
@@ -598,12 +598,19 @@ namespace DataCollect
             if (pbRun.Value == 100)
                 pbRun.Value = 0;
             pbRun.Value += 1;
-
+            TimeSpan ts = DateTime.Now - Batdau;
+            label4.Text = ts.ToString();
             backgroundWorker1.ReportProgress(pbRun.Value);
         }
 
         private void btnRun_Click(object sender, EventArgs e)
         {
+            if (backgroundWorker1.IsBusy)
+            {
+                backgroundWorker1.CancelAsync();
+                MessageBox.Show("Hãy chờ ít phút nữa rồi chạy lại");
+                return;
+            }
             Batdau = DateTime.Now;
             process = 3;
             label3.Visible = true;
@@ -620,23 +627,24 @@ namespace DataCollect
             //this.Cursor = Cursors.WaitCursor;
             if (TargetConn.State == ConnectionState.Closed)
                 TargetConn.Open();
-            SqlTransaction tran = TargetConn.BeginTransaction();
+            //SqlTransaction tran = TargetConn.BeginTransaction();
             try
             {
-                cmd = new SqlCommand("Tonghopbaocao2010", TargetConn, tran);
+                //cmd = new SqlCommand("Tonghopbaocao2010", TargetConn, tran);
+                cmd = new SqlCommand("Tonghopbaocao2010", TargetConn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@tungay", SqlDbType.NVarChar).Value = dtpFrom.Value.ToString("dd MMM yyyy");
                 cmd.Parameters.Add("@denngay", SqlDbType.NVarChar).Value = dtpTo.Value.ToString("dd MMM yyyy");
 
                 cmd.CommandTimeout = 0;
                 cmd.ExecuteNonQuery();
-                tran.Commit();
+                //tran.Commit();
                 Ketthuc = DateTime.Now;
                 MessageBox.Show("Tổng hợp xong báo cáo");
             }
             catch (SqlException ex)
             {
-                tran.Rollback();
+                //tran.Rollback();
                 MessageBox.Show(ex.ToString());
                 throw ex;
             }
@@ -684,8 +692,8 @@ namespace DataCollect
             
             try
             {
-               // XoaDuLieu();
-               // SaoChepDuLieu();
+                XoaDuLieu();
+                SaoChepDuLieu();
                 ChayTongHop();
             }
             catch (Exception ex)
@@ -702,7 +710,7 @@ namespace DataCollect
         }
 
         private void setbuttonStatus(bool stt)
-        {
+        {           
             btndelete.Enabled = stt;
             btnSelectFile.Enabled = stt;
             btnCopy.Enabled = stt;
@@ -737,5 +745,15 @@ namespace DataCollect
             backgroundWorker1.RunWorkerAsync();
             label3.Text = "Đã sao chép dữ liệu di động xong";
         }
+
+        private void DataCopy2010_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (backgroundWorker1.IsBusy)
+            {
+                //backgroundWorker1.CancelAsync();
+                backgroundWorker1_RunWorkerCompleted(null, null);
+                //backgroundWorker1.Dispose();
+            }
+        }       
     }
 }
