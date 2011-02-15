@@ -132,7 +132,7 @@ namespace DataCollect
             //create connection to the DBF file
             using (OdbcConnection connection = new OdbcConnection(dbfConnectionString))
             {
-                OdbcCommand command = new OdbcCommand("Select ma_tb, ngay_tt, tongtra from " + filename, connection);
+                OdbcCommand command = new OdbcCommand("Select ma_tb, ngay_tt, tientra from " + filename, connection);
                 connection.Open();
 
                 //Create a dbDatareader to the dbf file
@@ -390,7 +390,7 @@ namespace DataCollect
                 cmd = new SqlCommand("SELECT [ID],[TenThuebao],[Diachi],[Line],[MCQ],[LinhVucID],[DonviID],[TuyenID],[Thangnam],"
                     + " [NODK],[PS],[DT],[CONNO],[TuoiNo],[DTNODK],[DTPS],[KHID]  FROM TBLSTT where thangnam='"
                     + dtpTo.Value.AddMonths(-1).ToString("MMyyyy") + "' or thangnam='"
-                    + dtpTo.Value.AddMonths(-2).ToString("MMyyyy") + "'", SourceConn); 
+                    + dtpTo.Value.AddMonths(-2).ToString("MMyyyy") + "'", SourceConn);
                 cmd.CommandTimeout = 0;
                 if (SourceConn.State == ConnectionState.Closed)
                     SourceConn.Open();
@@ -560,7 +560,7 @@ namespace DataCollect
 
                 string strDir = ofdDidong.FileName.Replace("\\" + filename + extent, "");
                 //filename = filename;
-                btnCopy.Enabled = true;                
+                btnCopy.Enabled = true;
                 btnMobileDataCopy.Enabled = true;
                 if (ODBCManager.DSNExists("tradidong"))
                     ODBCManager.RemoveDSN("tradidong");
@@ -631,7 +631,10 @@ namespace DataCollect
             try
             {
                 //cmd = new SqlCommand("Tonghopbaocao2010", TargetConn, tran);
-                cmd = new SqlCommand("Tonghopbaocao2010", TargetConn);
+                if (dtpFrom.Value.Year == 2010)
+                    cmd = new SqlCommand("Tonghopbaocao2010", TargetConn);
+                else
+                    cmd = new SqlCommand("Tonghopbaocao2011", TargetConn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@tungay", SqlDbType.NVarChar).Value = dtpFrom.Value.ToString("dd MMM yyyy");
                 cmd.Parameters.Add("@denngay", SqlDbType.NVarChar).Value = dtpTo.Value.ToString("dd MMM yyyy");
@@ -650,7 +653,7 @@ namespace DataCollect
             }
             finally
             {
-                TargetConn.Close();               
+                TargetConn.Close();
                 //this.Cursor = Cursors.Default;
             }
         }
@@ -689,7 +692,7 @@ namespace DataCollect
 
         private void ChayTatCa()
         {
-            
+
             try
             {
                 XoaDuLieu();
@@ -701,7 +704,7 @@ namespace DataCollect
                 MessageBox.Show(ex.ToString());
                 MessageBox.Show("Chương trình dừng do lỗi");
                 return;
-            }           
+            }
         }
 
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -710,7 +713,7 @@ namespace DataCollect
         }
 
         private void setbuttonStatus(bool stt)
-        {           
+        {
             btndelete.Enabled = stt;
             btnSelectFile.Enabled = stt;
             btnCopy.Enabled = stt;
@@ -727,7 +730,7 @@ namespace DataCollect
             pbRun.Visible = false;
             this.Cursor = Cursors.Default;
             //label3.Visible = false;
-            setbuttonStatus(true);            
+            setbuttonStatus(true);
             TimeSpan ts = Ketthuc - Batdau;
             label3.Text = "Kết thúc với thời gian " + ts.ToString();
         }
@@ -754,6 +757,6 @@ namespace DataCollect
                 backgroundWorker1_RunWorkerCompleted(null, null);
                 //backgroundWorker1.Dispose();
             }
-        }       
+        }
     }
 }
