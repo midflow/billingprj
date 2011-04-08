@@ -638,6 +638,7 @@ namespace DataCollect
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@tungay", SqlDbType.NVarChar).Value = dtpFrom.Value.ToString("dd MMM yyyy");
                 cmd.Parameters.Add("@denngay", SqlDbType.NVarChar).Value = dtpTo.Value.ToString("dd MMM yyyy");
+                cmd.Parameters.Add("@namtinh", SqlDbType.NVarChar).Value = dtpTo.Value.ToString("yyyy");
 
                 cmd.CommandTimeout = 0;
                 cmd.ExecuteNonQuery();
